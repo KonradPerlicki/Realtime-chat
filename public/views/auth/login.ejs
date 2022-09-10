@@ -1,0 +1,265 @@
+<%- include('../components/pageHead.ejs') %>
+
+    <!-- auth-page wrapper -->
+    <div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
+        <div class="bg-overlay"></div>
+        <!-- auth-page content -->
+        <div class="auth-page-content overflow-hidden pt-lg-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card overflow-hidden">
+                            <div class="row g-0">
+                                <div class="col-lg-6">
+                                    <div class="p-lg-5 p-4 auth-one-bg h-100">
+                                        <div class="bg-overlay"></div>
+                                        <div class="position-relative h-100 d-flex flex-column">
+                                            <div class="mb-4">
+                                                <a href="/" class="d-block">
+                                                    <img src="assets/images/logo-light.png" alt="" height="18">
+                                                </a>
+                                            </div>
+                                            <div class="mt-auto">
+                                                <div class="mb-3">
+                                                    <i class="ri-double-quotes-l display-4 text-success"></i>
+                                                </div>
+
+                                                <div id="qoutescarouselIndicators" class="carousel slide"
+                                                    data-bs-ride="carousel">
+                                                    <div class="carousel-indicators">
+                                                        <button type="button" data-bs-target="#qoutescarouselIndicators"
+                                                            data-bs-slide-to="0" class="active" aria-current="true"
+                                                            aria-label="Slide 1"></button>
+                                                        <button type="button" data-bs-target="#qoutescarouselIndicators"
+                                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                        <button type="button" data-bs-target="#qoutescarouselIndicators"
+                                                            data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                    </div>
+                                                    <div class="carousel-inner text-center text-white-50 pb-5">
+                                                        <div class="carousel-item active">
+                                                            <p class="fs-15 fst-italic">" Lorem ipsum dolor sit amet
+                                                                consectetur adipisicing elit. Alias ut neque dicta
+                                                                exercitationem atque doloremque harum et optio dolores
+                                                                eveniet eos, iusto nihil, labore inventore odit culpa.
+                                                                Temporibus, velit fuga! "</p>
+                                                        </div>
+                                                        <div class="carousel-item">
+                                                            <p class="fs-15 fst-italic">"Lorem ipsum dolor sit amet
+                                                                consectetur adipisicing elit. Alias ut neque dicta
+                                                                exercitationem atque doloremque harum et optio dolores
+                                                                eveniet eos, iusto nihil, labore inventore odit culpa.
+                                                                Temporibus, velit fuga!"</p>
+                                                        </div>
+                                                        <div class="carousel-item">
+                                                            <p class="fs-15 fst-italic">" Lorem ipsum dolor sit amet
+                                                                consectetur adipisicing elit. Alias ut neque dicta
+                                                                exercitationem atque doloremque harum et optio dolores
+                                                                eveniet eos, iusto nihil, labore inventore odit culpa.
+                                                                Temporibus, velit fuga!"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end carousel -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+
+                                <div class="col-lg-6">
+                                    <div class="p-lg-5 p-4">
+                                        <div>
+                                            <h5 class="text-primary">Welcome Back !</h5>
+                                            <p class="text-muted">Sign in to continue to Velzon.</p>
+                                        </div>
+
+                                        <p class="error text-danger" id="error"></p>
+                                        <div class="mt-4">
+                                            <form id="loginForm" method="POST" action="/login"
+                                                class="form needs-validation" novalidate>
+                                                <div class="mb-3">
+                                                    <label for="username" class="form-label">Username <span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="username"
+                                                        placeholder="Enter username" value="velzon@themesbrand.com"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                        Please enter username
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-2">
+                                                    <div class="float-end">
+                                                        <a href="forgotpassword.html" class="text-muted">Forgot
+                                                            password?</a>
+                                                    </div>
+                                                    <label for="userpassword" class="form-label">Password <span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="password" class="form-control" id="userpassword"
+                                                        placeholder="Enter password" value="123456" required>
+                                                    <div class="invalid-feedback">
+                                                        Please enter password
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="auth-remember-check">
+                                                    <label class="form-check-label" for="auth-remember-check">Remember
+                                                        me</label>
+                                                </div>
+
+                                                <div class="mt-4">
+                                                    <button class="btn btn-success w-100" type="submit">Sign In</button>
+                                                </div>
+
+                                                <div class="mt-4 text-center">
+                                                    <div class="signin-other-title">
+                                                        <h5 class="fs-13 mb-4 title">Sign In with</h5>
+                                                    </div>
+
+                                                    <div>
+                                                        <button type="button"
+                                                            class="btn btn-primary btn-icon waves-effect waves-light"><i
+                                                                class="ri-facebook-fill fs-16"></i></button>
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-icon waves-effect waves-light"><i
+                                                                class="ri-google-fill fs-16"></i></button>
+                                                        <button type="button"
+                                                            class="btn btn-dark btn-icon waves-effect waves-light"><i
+                                                                class="ri-github-fill fs-16"></i></button>
+                                                        <button type="button"
+                                                            class="btn btn-info btn-icon waves-effect waves-light"><i
+                                                                class="ri-twitter-fill fs-16"></i></button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                        <div class="mt-5 text-center">
+                                            <p class="mb-0">Don't have an account ? <a href="/register"
+                                                    class="fw-semibold text-primary text-decoration-underline">
+                                                    Signup</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+                            </div>
+                            <!-- end row -->
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end col -->
+
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end auth page content -->
+
+        <!-- footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <p class="mb-0">&copy;
+                                2022 Velzon.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+    </div>
+    <!-- end auth-page-wrapper -->
+
+
+    <!-- JAVASCRIPT -->
+    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="assets/libs/feather-icons/feather.min.js"></script>
+    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="assets/js/plugins.js"></script>
+
+    <!-- password-addon init -->
+    <script src="assets/js/pages/form-validation.init.js"></script>
+
+    <script src="assets/js/auth/login.js"></script>
+
+    <% if (errors.length) { %>
+        <span data-toast data-toast-text="<%= errors %>" data-toast-gravity="top" data-toast-position="center"
+            data-toast-className="danger fs-4" data-toast-duration="3000"></span>
+        <% } %>
+            <% if (success.length) { %>
+                <span data-toast data-toast-text="<%= success %>" data-toast-gravity="top" data-toast-position="center"
+                    data-toast-className="success fs-4" data-toast-duration="3000"></span>
+                <% } %>
+                    <script>
+                        var toastExamples = document.querySelectorAll('[data-toast]');
+                        toastExamples.forEach(function (element) {
+                            var toastData = {};
+                            var isToastVal = element.attributes;
+                            if (isToastVal['data-toast-text']) {
+                                toastData.text =
+                                    isToastVal['data-toast-text'].value.toString();
+                            }
+                            if (isToastVal['data-toast-gravity']) {
+                                toastData.gravity =
+                                    isToastVal['data-toast-gravity'].value.toString();
+                            }
+                            if (isToastVal['data-toast-position']) {
+                                toastData.position =
+                                    isToastVal['data-toast-position'].value.toString();
+                            }
+                            if (isToastVal['data-toast-className']) {
+                                toastData.className =
+                                    isToastVal['data-toast-className'].value.toString();
+                            }
+                            if (isToastVal['data-toast-duration']) {
+                                toastData.duration =
+                                    isToastVal['data-toast-duration'].value.toString();
+                            }
+                            if (isToastVal['data-toast-close']) {
+                                toastData.close =
+                                    isToastVal['data-toast-close'].value.toString();
+                            }
+                            if (isToastVal['data-toast-style']) {
+                                toastData.style =
+                                    isToastVal['data-toast-style'].value.toString();
+                            }
+                            if (isToastVal['data-toast-offset']) {
+                                toastData.offset = isToastVal['data-toast-offset'];
+                            }
+                            Toastify({
+                                newWindow: true,
+                                text: toastData.text,
+                                gravity: toastData.gravity,
+                                position: toastData.position,
+                                className: 'bg-' + toastData.className,
+                                stopOnFocus: true,
+                                offset: {
+                                    x: toastData.offset ? 50 : 0, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                                    y: toastData.offset ? 10 : 0, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                                },
+                                duration: toastData.duration,
+                                close: toastData.close == 'close' ? true : false,
+                                style:
+                                    toastData.style == 'style'
+                                        ? {
+                                            background:
+                                                'linear-gradient(to right, #0AB39C, #405189)',
+                                        }
+                                        : '',
+                            }).showToast();
+                        });
+                    </script>
+                    </body>
+
+                    </html>
