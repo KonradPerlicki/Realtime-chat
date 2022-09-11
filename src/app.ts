@@ -6,35 +6,35 @@ import mongoose from 'mongoose';
 import compression from 'compression';
 import logger from './utils/logger';
 import errorHandle from './middleware/errorHandle';
-import Controller from './utils/interfaces/controller';
-import IndexController from './controllers/indexController';
 import { join } from 'path';
-import AuthController from './controllers/authController';
 import deserializeUser from './middleware/deserializeUser';
 import cookieParser from 'cookie-parser';
+import readRecursive from 'fs-readdir-recursive';
 
 class App {
     public app: Express;
     private port: number;
 
-    constructor(port: number, controllers: Controller[]) {
+    constructor(port: number) {
         this.app = express();
         this.port = port;
 
         this.initialiseMiddlewares();
         this.connectToDb();
 
-        this.initialisecontrollers(controllers);
+        this.initialisecontrollers();
 
         this.app.listen(this.port, () => {
             logger.info('App listening on port ' + this.port);
         });
     }
 
-    private initialisecontrollers(controllers: Controller[]): void {
-        controllers.forEach((route: Controller) => {
-            this.app.use(route.router);
-        });
+    private async initialisecontrollers() {
+        const controllers = readRecursive(join(__dirname, '/controllers'));
+        for (const filePath of controllers) {
+            const controller = await import('./controllers/' + filePath);
+            this.app.use(new controller.default().router);
+        }
 
         this.initialiseErrorHandling();
     }
@@ -77,5 +77,4 @@ class App {
 
 const port = config.get<number>('port');
 
-const controllers = [new IndexController(), new AuthController()];
-new App(port, controllers);
+new App(port);
