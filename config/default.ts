@@ -8,4 +8,8 @@ export default {
     access_token_secret:
         'TES61yTC9qTkqTkP3fkpxBPqTkP3fkpxBP3fkpxBPqTkP3fkpxBPC9qTkP3qTkP3fkpxBPqTkP3fkpxBfkpP3fkpxBqTkP3fkpxBPqTkP3fkpxBPqTkP3f',
     dbUri: 'mongodb+srv://admin:admin@nodenauka.t0n2z.mongodb.net/projekt?retryWrites=true&w=majority',
+    mail_user: '8b2a676cc7d56e',
+    mail_password: '7bd2bfe4294f21',
+    mail_port: 2525,
+    mail_host: 'smtp.mailtrap.io',
 };

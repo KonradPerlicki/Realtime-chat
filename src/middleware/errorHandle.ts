@@ -12,5 +12,9 @@ export default function errorHandle(
     const message = error.message || 'Something went wrong';
 
     logger.error(message);
-    res.status(status).send({ status, message });
+    return res.status(status).send({ status, message });
+}
+
+export function notFoundRoute(req: Request, res: Response) {
+    return res.render('error/404');
 }

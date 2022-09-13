@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import compression from 'compression';
 import logger from './utils/logger';
-import errorHandle from './middleware/errorHandle';
+import errorHandle, { notFoundRoute } from './middleware/errorHandle';
 import { join } from 'path';
 import deserializeUser from './middleware/deserializeUser';
 import cookieParser from 'cookie-parser';
@@ -64,6 +64,7 @@ class App {
 
     private initialiseErrorHandling(): void {
         this.app.use(errorHandle);
+        this.app.use(notFoundRoute);
     }
 
     private connectToDb(): void {

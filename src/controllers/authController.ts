@@ -8,6 +8,8 @@ import ValidationException from '../exceptions/validationException';
 import StatusCodes from 'http-status-codes';
 import authenticated from '../middleware/authenticated';
 import UserNotFoundException from '../exceptions/userNotFoundException';
+import guestOnly from '../middleware/guestOnly';
+import { emailRequestLimiter } from '../utils/rateLimiters';
 
 export default class AuthController
     extends BaseController
@@ -22,20 +24,45 @@ export default class AuthController
     }
 
     private initialiseRoutes(): void {
-        this.router.get(`${this.path}login`, this.login);
-        this.router.post(`${this.path}login`, this.handleLogin);
+        this.router.get(`${this.path}login`, guestOnly, this.login);
+        this.router.post(`${this.path}login`, guestOnly, this.handleLogin);
 
-        this.router.get(`${this.path}register`, this.register);
+        this.router.get(`${this.path}register`, guestOnly, this.register);
         this.router.post(
             `${this.path}register`,
-            validation(validateSchema.registerUser),
+            [guestOnly, validation(validateSchema.registerUser)],
             this.handleRegister
         );
 
         this.router.delete(`${this.path}logout`, authenticated, this.logout);
+
+        this.router.get(
+            `${this.path}forgot-password`,
+            guestOnly,
+            this.forgotPassword
+        );
+
+        this.router.post(
+            `${this.path}forgot-password`,
+            [emailRequestLimiter, guestOnly],
+            this.handleForgotPassword
+        );
+        this.router.get(
+            `${this.path}reset-password`,
+            guestOnly,
+            this.resetPassword
+        );
+        this.router.post(
+            `${this.path}reset-password`,
+            [guestOnly, validation(validateSchema.resetPassword)],
+            this.handleResetPassword
+        );
     }
 
     private login = (req: Request, res: Response) => {
+        res.cookie('success', ['Successfully changed password'], {
+            httpOnly: true,
+        });
         return res.render('auth/login');
     };
 
@@ -78,7 +105,11 @@ export default class AuthController
     };
 
     private handleRegister = async (
-        req: Request,
+        req: Request<
+            {},
+            {},
+            { username: string; email: string; password: string }
+        >,
         res: Response,
         next: NextFunction
     ): Promise<Response | void> => {
@@ -101,6 +132,66 @@ export default class AuthController
             return res.status(StatusCodes.CREATED).json({ user });
         } catch (error: any) {
             return next(new ValidationException(error.message));
+        }
+    };
+
+    private forgotPassword = (req: Request, res: Response) => {
+        res.render('auth/forgotPassword');
+    };
+
+    private handleForgotPassword = async (
+        req: Request<{}, {}, { email: string }>,
+        res: Response,
+        next: NextFunction
+    ) => {
+        const { email } = req.body;
+        try {
+            await this.service.sendForgotEmail(email);
+            return res.json({ success: true });
+        } catch (error: any) {
+            return next(new Error(error.message));
+        }
+    };
+
+    private resetPassword = async (
+        req: Request<
+            {},
+            {},
+            {},
+            {
+                token: string;
+                id: string;
+            }
+        >,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const { token, id: userId } = req.query;
+            await this.service.validateUrl(token, userId);
+            res.render('auth/resetPassword', {
+                userId,
+            });
+        } catch (error: any) {
+            return next();
+        }
+    };
+
+    private handleResetPassword = async (
+        req: Request<{}, {}, { password: string; userId: string }>,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const { password, userId } = req.body;
+
+            await this.service.resetPassword(userId, password);
+            res.cookie('success', ['Successfully changed password'], {
+                httpOnly: true,
+            });
+            return res.json({ success: true });
+        } catch (error: any) {
+            return next(new UserNotFoundException(error.message));
         }
     };
 }

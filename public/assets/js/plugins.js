@@ -14,7 +14,7 @@ if (
     document.querySelectorAll('[data-provider]')
 ) {
     document.writeln(
-        "<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/toastify-js'></script>"
+        "<script type='text/javascript' src='assets/libs/toastify.js'></script>"
     );
     document.writeln(
         "<script type='text/javascript' src='assets/libs/choices.js'></script>"
