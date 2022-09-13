@@ -4,7 +4,7 @@ $('#logout').click(() => {
         method: 'DELETE',
         success: (res) => {
             localStorage.removeItem('user');
-            window.location.href = '/login';
+            window.location.href = '/logout';
         },
         error: (res) => {
             console.log(res);

@@ -2,7 +2,7 @@ $('#loginForm').submit((e) => {
     e.preventDefault();
 
     var username = document.getElementById('username').value;
-    var password = document.getElementById('userpassword').value;
+    var password = document.getElementById('password-input').value;
 
     $.ajax({
         url: '/login',
@@ -15,7 +15,7 @@ $('#loginForm').submit((e) => {
         error: (err) => {
             console.log(err);
             document.getElementById('error').innerHTML =
-                '*Invalid Email or Password';
+                'Invalid Email or Password';
         },
     });
 });

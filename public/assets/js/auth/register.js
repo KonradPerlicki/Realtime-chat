@@ -2,9 +2,9 @@ $('#registerForm').submit((e) => {
     e.preventDefault();
     var email = document.getElementById('email').value;
     var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+    var password = document.getElementById('password-input').value;
     var passwordConfirmation = document.getElementById(
-        'passwordConfirmation'
+        'confirm-password-input'
     ).value;
 
     $('.invalid-feedback').hide();

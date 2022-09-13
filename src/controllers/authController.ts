@@ -34,7 +34,12 @@ export default class AuthController
             this.handleRegister
         );
 
-        this.router.delete(`${this.path}logout`, authenticated, this.logout);
+        this.router.delete(
+            `${this.path}logout`,
+            authenticated,
+            this.handleLogout
+        );
+        this.router.get(`${this.path}logout`, guestOnly, this.logout);
 
         this.router.get(
             `${this.path}forgot-password`,
@@ -95,13 +100,18 @@ export default class AuthController
         return res.render('auth/register');
     };
 
-    private logout = (req: Request, res: Response) => {
+    private handleLogout = (req: Request, res: Response) => {
         res.clearCookie('accessToken');
-
         res.clearCookie('refreshToken');
-
-        res.cookie('success', ['Successfully logged out'], { httpOnly: true });
+        res.cookie('loggedOut', true, { httpOnly: true });
         return res.json({ success: true });
+    };
+
+    private logout = (req: Request, res: Response) => {
+        const { loggedOut } = req.cookies;
+        res.clearCookie('loggedOut');
+        if (!loggedOut) return res.redirect('/login');
+        return res.render('auth/logout');
     };
 
     private handleRegister = async (
