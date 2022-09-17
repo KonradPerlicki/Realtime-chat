@@ -9,7 +9,6 @@ $('#loginForm').submit((e) => {
         method: 'POST',
         data: { username, password },
         success: (res) => {
-            localStorage.setItem('user', res.user);
             window.location.href = '/';
         },
         error: (err) => {

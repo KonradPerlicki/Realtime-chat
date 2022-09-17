@@ -10,6 +10,8 @@ import authenticated from '../middleware/authenticated';
 import UserNotFoundException from '../exceptions/userNotFoundException';
 import guestOnly from '../middleware/guestOnly';
 import { emailRequestLimiter } from '../utils/rateLimiters';
+import passport from 'passport';
+import { UserInterface } from '../models/User';
 
 export default class AuthController
     extends BaseController
@@ -26,6 +28,21 @@ export default class AuthController
     private initialiseRoutes(): void {
         this.router.get(`${this.path}login`, guestOnly, this.login);
         this.router.post(`${this.path}login`, guestOnly, this.handleLogin);
+
+        this.router.get(
+            `${this.path}login/google`,
+            guestOnly,
+            passport.authenticate('google')
+        );
+        this.router.get(
+            `${this.path}google/callback`,
+            passport.authenticate('google', {
+                failureRedirect: '/google/failure',
+                failureMessage: true,
+            }),
+            this.handleGoogleLogin
+        );
+        this.router.get(`${this.path}google/failure`, this.handleGoogleError);
 
         this.router.get(`${this.path}register`, guestOnly, this.register);
         this.router.post(
@@ -78,22 +95,26 @@ export default class AuthController
     ) => {
         const { username, password } = req.body;
         try {
-            const { accessToken, refreshToken, user } =
-                await this.service.login(username, password);
-            res.cookie('accessToken', accessToken, {
-                maxAge: 1000 * 60 * 15, // 15 minutes
-                httpOnly: true,
-            });
-
-            res.cookie('refreshToken', refreshToken, {
-                maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-                httpOnly: true,
-            });
+            const user = await this.service.login(username, password);
+            this.service.registerTokens(res, user);
 
             return res.json({ user });
         } catch (error: any) {
             return next(new UserNotFoundException(error.message));
         }
+    };
+
+    private handleGoogleLogin = (req: Request, res: Response) => {
+        const user = req.user as UserInterface;
+        this.service.registerTokens(res, user);
+
+        return res.redirect('/');
+    };
+
+    private handleGoogleError = (req: Request, res: Response) => {
+        const { messages } = req.session as Express.CustomSession;
+        res.cookie('errors', messages, { httpOnly: true });
+        return res.redirect('/login');
     };
 
     private register = (req: Request, res: Response) => {
@@ -126,18 +147,9 @@ export default class AuthController
         try {
             const { username, email, password } = req.body;
 
-            const { accessToken, refreshToken, user } =
-                await this.service.register(username, email, password);
+            const user = await this.service.register(username, email, password);
 
-            res.cookie('accessToken', accessToken, {
-                maxAge: 1000 * 60 * 15, // 15 minutes
-                httpOnly: true,
-            });
-
-            res.cookie('refreshToken', refreshToken, {
-                maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-                httpOnly: true,
-            });
+            this.service.registerTokens(res, user);
 
             return res.status(StatusCodes.CREATED).json({ user });
         } catch (error: any) {

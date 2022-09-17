@@ -1,12 +1,14 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-export interface User extends Document {
+export interface UserInterface extends Document {
     username: string;
     email: string;
-    password: string;
+    password: string | undefined;
     createdAt: Date;
     updatedAt: Date;
+    photo: string;
+    googleId: string;
 
     isValidPassword(password: string): Promise<boolean>;
 }
@@ -17,7 +19,6 @@ const UserSchema = new Schema(
             type: String,
             trim: true,
             unique: true,
-            required: true,
         },
         email: {
             type: String,
@@ -25,21 +26,29 @@ const UserSchema = new Schema(
             unique: true,
             trim: true,
         },
+        photo: {
+            type: String,
+        },
         password: {
             type: String,
+        },
+        googleId: {
+            type: String,
+            unique: true,
         },
     },
     { timestamps: true }
 );
 
-UserSchema.pre<User>('save', async function (next) {
+UserSchema.pre<UserInterface>('save', async function (next) {
     if (!this.isModified('password')) {
         return next();
     }
+    if (this.password) {
+        const hash = await bcrypt.hash(this.password, 10);
 
-    const hash = await bcrypt.hash(this.password, 10);
-
-    this.password = hash;
+        this.password = hash;
+    }
 
     return next();
 });
@@ -48,4 +57,4 @@ UserSchema.methods.isValidPassword = async function (password: string) {
     return await bcrypt.compare(password, this.password);
 };
 
-export default model<User>('User', UserSchema);
+export default model<UserInterface>('User', UserSchema);

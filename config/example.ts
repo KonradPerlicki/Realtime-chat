@@ -10,4 +10,8 @@ export default {
     mail_password: '',
     mail_port: 2525,
     mail_host: '',
+    session_secret: '',
+    google_client_id: '',
+    google_client_secret: '',
+    google_callback_url: '',
 };

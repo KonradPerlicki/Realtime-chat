@@ -10,6 +10,8 @@ import { join } from 'path';
 import deserializeUser from './middleware/deserializeUser';
 import cookieParser from 'cookie-parser';
 import readRecursive from 'fs-readdir-recursive';
+import session from 'express-session';
+import passport from 'passport';
 
 class App {
     public app: Express;
@@ -43,6 +45,15 @@ class App {
         this.app.use(helmet());
         this.app.use(morgan('dev'));
         this.app.use(express.json());
+        this.app.use(
+            session({
+                secret: config.get<string>('session_secret'),
+                resave: true,
+                saveUninitialized: true,
+            })
+        );
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(compression());

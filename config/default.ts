@@ -12,4 +12,9 @@ export default {
     mail_password: '7bd2bfe4294f21',
     mail_port: 2525,
     mail_host: 'smtp.mailtrap.io',
+    session_secret: '8b2a676cca676ccpi4G2+Pm}xU}f":ye7d56ea676cc',
+    google_client_id:
+        '122405413075-842sd9mhtqe8sa0d26qkeqevh1ks7gk9.apps.googleusercontent.com',
+    google_client_secret: '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',
+    google_callback_url: 'http://localhost:3000/google/callback',
 };
