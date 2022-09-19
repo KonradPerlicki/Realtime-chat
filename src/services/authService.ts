@@ -65,7 +65,7 @@ export default class AuthService {
         });
         const subject = 'Password change request';
         const templateData = {
-            url: `http://localhost:3000/reset-password?token=${token.token}&id=${user._id}`,
+            url: `http://localhost:3000/admin/reset-password?token=${token.token}&id=${user._id}`,
         };
 
         await Mailer.send(email, subject, 'forgotPassword', templateData);

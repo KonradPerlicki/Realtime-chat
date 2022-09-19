@@ -10,11 +10,11 @@ $('#registerForm').submit((e) => {
     $('.invalid-feedback').hide();
 
     $.ajax({
-        url: '/register',
+        url: '/admin/register',
         method: 'POST',
         data: { username, password, email, passwordConfirmation },
         success: (res) => {
-            window.location.href = '/';
+            window.location.href = '/admin';
         },
         error: (res) => {
             const data = JSON.parse(res.responseText);

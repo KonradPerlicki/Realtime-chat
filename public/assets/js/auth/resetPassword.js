@@ -10,11 +10,11 @@ $('#form').submit((e) => {
     $('#invalid').hide();
 
     $.ajax({
-        url: '/reset-password',
+        url: '/admin/reset-password',
         method: 'POST',
         data: { password, passwordConfirmation, userId },
         success: (res) => {
-            window.location.href = '/login';
+            window.location.href = '/admin/login';
         },
         error: (res) => {
             const data = JSON.parse(res.responseText);

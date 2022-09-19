@@ -4,7 +4,7 @@ $('#form').submit((e) => {
     var email = document.getElementById('email').value;
     document.getElementById('info').innerHTML = '';
     $.ajax({
-        url: '/forgot-password',
+        url: '/admin/forgot-password',
         method: 'POST',
         data: { email },
         success: (res) => {

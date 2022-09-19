@@ -1,9 +1,9 @@
 $('#logout').click(() => {
     $.ajax({
-        url: '/logout',
+        url: '/admin/logout',
         method: 'DELETE',
         success: (res) => {
-            window.location.href = '/logout';
+            window.location.href = '/admin/logout';
         },
         error: (res) => {
             console.log(res);

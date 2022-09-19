@@ -17,7 +17,7 @@ export default class AuthController
     extends BaseController
     implements Controller
 {
-    public path = '/';
+    public path = '/admin/';
     private service = new AuthService();
 
     constructor() {
@@ -37,7 +37,7 @@ export default class AuthController
         this.router.get(
             `${this.path}google/callback`,
             passport.authenticate('google', {
-                failureRedirect: '/google/failure',
+                failureRedirect: '/admin/google/failure',
                 failureMessage: true,
             }),
             this.handleGoogleLogin
@@ -108,13 +108,13 @@ export default class AuthController
         const user = req.user as UserInterface;
         this.service.registerTokens(res, user);
 
-        return res.redirect('/');
+        return res.redirect('/admin');
     };
 
     private handleGoogleError = (req: Request, res: Response) => {
         const { messages } = req.session as Express.CustomSession;
         res.cookie('errors', messages, { httpOnly: true });
-        return res.redirect('/login');
+        return res.redirect('/admin/login');
     };
 
     private register = (req: Request, res: Response) => {
@@ -131,7 +131,7 @@ export default class AuthController
     private logout = (req: Request, res: Response) => {
         const { loggedOut } = req.cookies;
         res.clearCookie('loggedOut');
-        if (!loggedOut) return res.redirect('/login');
+        if (!loggedOut) return res.redirect('/admin/login');
         return res.render('auth/logout');
     };
 

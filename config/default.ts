@@ -16,5 +16,5 @@ export default {
     google_client_id:
         '122405413075-842sd9mhtqe8sa0d26qkeqevh1ks7gk9.apps.googleusercontent.com',
     google_client_secret: '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',
-    google_callback_url: 'http://localhost:3000/google/callback',
+    google_callback_url: 'http://localhost:3000/admin/google/callback',
 };

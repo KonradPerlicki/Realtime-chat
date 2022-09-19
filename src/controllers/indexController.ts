@@ -7,7 +7,7 @@ export default class IndexController
     extends BaseController
     implements Controller
 {
-    public path = '/';
+    public path = '/admin';
 
     constructor() {
         super();

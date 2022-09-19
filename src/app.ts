@@ -58,6 +58,7 @@ class App {
         this.app.use(cookieParser());
         this.app.use(compression());
         this.app.use(express.static('public'));
+        this.app.use('/admin', express.static('public'));
         this.app.set('view engine', 'ejs');
         this.app.set('views', join(__dirname, '../public/views'));
 

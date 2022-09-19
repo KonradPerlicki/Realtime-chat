@@ -5,11 +5,11 @@ $('#loginForm').submit((e) => {
     var password = document.getElementById('password-input').value;
 
     $.ajax({
-        url: '/login',
+        url: '/admin/login',
         method: 'POST',
         data: { username, password },
         success: (res) => {
-            window.location.href = '/';
+            window.location.href = '/admin';
         },
         error: (err) => {
             console.log(err);
