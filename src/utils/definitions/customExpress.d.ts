@@ -1,4 +1,4 @@
-import { User } from '../../models/User';
+import { UserInterface } from '../../models/User';
 
 declare global {
     namespace Express {
@@ -6,7 +6,7 @@ declare global {
             messages?: string[];
         }
         interface Request {
-            user: User | null;
+            user: UserInterface | null;
         }
     }
 }

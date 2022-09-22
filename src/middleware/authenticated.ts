@@ -8,7 +8,7 @@ export default function authenticated(
 ) {
     if (!req.user) {
         res.cookie('errors', ['Unauthorized action.'], { httpOnly: true });
-        return res.status(StatusCodes.UNAUTHORIZED).redirect('/login');
+        return res.status(StatusCodes.UNAUTHORIZED).redirect('/admin/login');
     }
     return next();
 }

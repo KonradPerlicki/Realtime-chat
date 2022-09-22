@@ -438,7 +438,7 @@ File: Main Js File
 
             var ul = document.createElement('ul');
             ul.innerHTML =
-                '<a href="#" class="logo"><img src="../assets/images/logo-sm.png" alt="" height="22"></a>';
+                '<a href="#" class="logo"><img src="/assets/images/logo-sm.png" alt="" height="22"></a>';
             document
                 .getElementById('navbar-nav')
                 .querySelectorAll('.menu-link')
@@ -572,19 +572,37 @@ File: Main Js File
                     dropdown.classList.add('show');
                     searchOptions.classList.remove('d-none');
 
-                    var inputVal = searchInput.value.toLowerCase();
-                    var notifyItem =
-                        document.getElementsByClassName('notify-item');
-                    notifyItem.forEach(function (element) {
-                        var notifiTxt = element.getElementsByTagName('span')
-                            ? element
-                                  .getElementsByTagName('span')[0]
-                                  .innerText.toLowerCase()
-                            : '';
-                        if (notifiTxt)
-                            element.style.display = notifiTxt.includes(inputVal)
-                                ? 'block'
-                                : 'none';
+                    var inputVal = searchInput.value;
+                    $.ajax({
+                        url: '/admin/search',
+                        type: 'GET',
+                        data: {
+                            q: inputVal,
+                        },
+                        success: (res) => {
+                            var list = $('.notification-list');
+                            list.empty();
+                            res.forEach((user) => {
+                                list.append(`<a href="/admin/user/${
+                                    user._id
+                                }" class="dropdown-item notify-item py-2">
+                                <div class="d-flex">
+                                    <img  crossorigin="anonymous" src="${
+                                        user.photo
+                                    }"
+                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                    <div class="flex-1">
+                                        <h6 class="m-0">${
+                                            user.username
+                                                ? user.username
+                                                : user.email
+                                        }</h6>
+                                        <span class="fs-11 mb-0 text-muted">Manager</span>
+                                    </div>
+                                </div>
+                            </a>`);
+                            });
+                        },
                     });
                 } else {
                     dropdown.classList.remove('show');

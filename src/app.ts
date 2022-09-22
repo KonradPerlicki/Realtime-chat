@@ -42,7 +42,16 @@ class App {
     }
 
     private initialiseMiddlewares(): void {
-        this.app.use(helmet());
+        this.app.use(
+            helmet({
+                contentSecurityPolicy: {
+                    directives: {
+                        imgSrc: ['*'],
+                    },
+                },
+            })
+        );
+
         this.app.use(morgan('dev'));
         this.app.use(express.json());
         this.app.use(
@@ -57,8 +66,8 @@ class App {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(compression());
-        this.app.use(express.static('public'));
-        this.app.use('/admin', express.static('public'));
+        //this.app.disable('etag');
+        this.app.use(express.static('public/'));
         this.app.set('view engine', 'ejs');
         this.app.set('views', join(__dirname, '../public/views'));
 

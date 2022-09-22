@@ -157,7 +157,7 @@ export default class AuthService {
         const accessToken = createToken(user, 'access');
         const refreshToken = createToken(user, 'refresh');
         res.cookie('accessToken', accessToken, {
-            maxAge: 1000 * 60 * 15, // 15 minutes
+            maxAge: 1000 * 60 * 60, // 60 minutes
             httpOnly: true,
         });
 

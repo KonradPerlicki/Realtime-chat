@@ -90,7 +90,7 @@ xhttp.onload = function () {
         raw.assignedto.forEach(function (img) {
             imgHtml += `
                 <a href="javascript: void(0);" class="avatar-group-item" data-img="${img}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
-                    <img src="../assets/images/users/${img}" alt="" class="rounded-circle avatar-xxs" />
+                    <img src="/assets/images/users/${img}" alt="" class="rounded-circle avatar-xxs" />
                 </a>
             `;
         });
@@ -583,7 +583,7 @@ function assignToUsers() {
     if (assignedTo.length > 0) {
         assignedTo.forEach(function (ele) {
             assignedtousers += `<a href="javascript: void(0);" class="avatar-group-item" data-img="${ele.value}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
-                    <img src="../assets/images/users/${ele.value}" alt="" class="rounded-circle avatar-xxs" />
+                    <img src="/assets/images/users/${ele.value}" alt="" class="rounded-circle avatar-xxs" />
                 </a>`;
         });
     } else {

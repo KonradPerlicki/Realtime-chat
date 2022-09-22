@@ -28,6 +28,7 @@ const UserSchema = new Schema(
         },
         photo: {
             type: String,
+            default: '/assets/images/users/user-dummy-img.jpg',
         },
         password: {
             type: String,

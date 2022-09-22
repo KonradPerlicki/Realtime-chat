@@ -4,7 +4,7 @@ import config from 'config';
 
 const formatUserData = (user: UserInterface) => {
     return {
-        id: user._id as number,
+        id: user._id.toString() as string,
         username: user.username,
         email: user.email,
         photo: user.photo,

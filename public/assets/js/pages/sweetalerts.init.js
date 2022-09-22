@@ -453,7 +453,7 @@ if (document.getElementById('custom-sa-notification'))
                 html:
                     '<div class="mt-3">' +
                     '<div class="avatar-lg mx-auto">' +
-                    '<img src="../assets/images/users/avatar-2.jpg" class="rounded-circle img-thumbnail" alt="thumbnail">' +
+                    '<img src="/assets/images/users/avatar-2.jpg" class="rounded-circle img-thumbnail" alt="thumbnail">' +
                     '</div>' +
                     '<div class="mt-4 pt-2 fs-15">' +
                     '<h4 class="fs-18 fw-semibold">Welcome <span class="fw-semibold">Mike Mayer</span></h4>' +

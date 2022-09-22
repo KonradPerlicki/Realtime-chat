@@ -13,6 +13,7 @@ function deserializeUser(req: Request, res: Response, next: NextFunction) {
     // For a valid access token
     if (user) {
         req.user = user;
+        res.locals.user = user;
         return next();
     }
 
@@ -35,6 +36,7 @@ function deserializeUser(req: Request, res: Response, next: NextFunction) {
     });
 
     req.user = refreshUser;
+    res.locals.user = refreshUser;
     return next();
 }
 
