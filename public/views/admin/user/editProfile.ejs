@@ -1,0 +1,300 @@
+<%- include('../../components/pageHead.ejs') %>
+    <div id="layout-wrapper">
+        <%- include('../../components/header.ejs') %>
+            <!-- ========== App Menu ========== -->
+            <div class="app-menu navbar-menu">
+                <!-- LOGO -->
+                <div class="navbar-brand-box">
+                    <!-- Dark Logo-->
+                    <a href="index.html" class="logo logo-dark">
+                        <span class="logo-sm">
+                            <img src="/assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="/assets/images/logo-dark.png" alt="" height="17">
+                        </span>
+                    </a>
+                    <!-- Light Logo-->
+                    <a href="index.html" class="logo logo-light">
+                        <span class="logo-sm">
+                            <img src="/assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="/assets/images/logo-light.png" alt="" height="17">
+                        </span>
+                    </a>
+                    <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+                        id="vertical-hover">
+                        <i class="ri-record-circle-line"></i>
+                    </button>
+                </div>
+
+                <div id="scrollbar">
+                    <%- include('../../components/leftMenu.ejs') %>
+                </div>
+
+                <div class="sidebar-background"></div>
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- Vertical Overlay-->
+            <div class="vertical-overlay"></div>
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <div class="position-relative mx-n4 mt-n4">
+                            <div class="profile-wid-bg profile-setting-img">
+                                <img src="<%= user.backgroundPhoto %>" class="profile-wid-img" alt="">
+                                <div class="overlay-content">
+                                    <div class="text-end p-3">
+                                        <form id="personalDetailsForm" enctype="multipart/form-data">
+                                            <div class="p-0 ms-auto rounded-circle profile-photo-edit">
+                                                <input name="backgroundPhoto" id="profile-foreground-img-file-input"
+                                                    type="file" class="profile-foreground-img-file-input">
+                                                <label for="profile-foreground-img-file-input"
+                                                    class="profile-photo-edit btn btn-light">
+                                                    <i class="ri-image-edit-line align-bottom me-1"></i> Change Cover
+                                                </label>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xxl-3">
+                                <div class="card mt-n5">
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
+                                                <img src="<%= user.photo %>" crossorigin="anonymous"
+                                                    class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+                                                    alt="user-profile-image">
+                                                <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                                    <input name="photo" id="profile-img-file-input" type="file"
+                                                        class="profile-img-file-input">
+                                                    <label for="profile-img-file-input"
+                                                        class="profile-photo-edit avatar-xs">
+                                                        <span class="avatar-title rounded-circle bg-light text-body">
+                                                            <i class="ri-camera-fill"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <h5 class="fs-16 mb-1">
+                                                <%= user.username ? user.username : user.email %>
+                                            </h5>
+                                            <p class="text-muted mb-0">
+                                                <%= user.title %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end col-->
+                            <div class="col-xxl-9">
+                                <div class="card mt-xxl-n5">
+                                    <div class="card-header">
+                                        <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-bs-toggle="tab" href="#personalDetails"
+                                                    role="tab">
+                                                    <i class="fas fa-home"></i>
+                                                    Personal Details
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#changePassword"
+                                                    role="tab">
+                                                    <i class="far fa-user"></i>
+                                                    Change Password
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body p-4">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="personalDetails" role="tabpanel">
+
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="firstnameInput" class="form-label">First
+                                                                Name</label>
+                                                            <input type="text" class="form-control" id="firstnameInput"
+                                                                name="firstName" placeholder="Enter your firstname"
+                                                                value="<%= user.firstName %>">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="lastnameInput" class="form-label">Last
+                                                                Name</label>
+                                                            <input type="text" class="form-control" name="lastName"
+                                                                id="lastnameInput" placeholder="Enter your lastname"
+                                                                value="<%= user.lastName %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="designationInput"
+                                                                class="form-label">Title</label>
+                                                            <input type="text" class="form-control" name="title"
+                                                                id="designationInput" placeholder="Title"
+                                                                value="<%= user.title %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3 pb-2">
+                                                            <label for="exampleFormControlTextarea"
+                                                                class="form-label">Description</label>
+                                                            <textarea class="form-control"
+                                                                id="exampleFormControlTextarea" name="description"
+                                                                placeholder="Enter your description"
+                                                                rows="3"><%= user.description %></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-12">
+                                                        <div class="hstack gap-2 justify-content-end">
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Update</button>
+                                                            <a href="/admin/user/<%= user._id %>"><button type="button"
+                                                                    class="btn btn-soft-success">Return</button></a>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                </div>
+                                                <!--end row-->
+                                                </form>
+                                            </div>
+                                            <!--end tab-pane-->
+                                            <div class="tab-pane" id="changePassword" role="tabpanel">
+                                                <form action="javascript:void(0);">
+                                                    <div class="row g-2">
+                                                        <div class="col-lg-4">
+                                                            <div>
+                                                                <label for="oldpasswordInput" class="form-label">Old
+                                                                    Password*</label>
+                                                                <input type="password" class="form-control"
+                                                                    id="oldpasswordInput"
+                                                                    placeholder="Enter current password">
+                                                            </div>
+                                                        </div>
+                                                        <!--end col-->
+                                                        <div class="col-lg-4">
+                                                            <div>
+                                                                <label for="newpasswordInput" class="form-label">New
+                                                                    Password*</label>
+                                                                <input type="password" class="form-control"
+                                                                    id="newpasswordInput"
+                                                                    placeholder="Enter new password">
+                                                            </div>
+                                                        </div>
+                                                        <!--end col-->
+                                                        <div class="col-lg-4">
+                                                            <div>
+                                                                <label for="confirmpasswordInput"
+                                                                    class="form-label">Confirm
+                                                                    Password*</label>
+                                                                <input type="password" class="form-control"
+                                                                    id="confirmpasswordInput"
+                                                                    placeholder="Confirm password">
+                                                            </div>
+                                                        </div>
+                                                        <!--end col-->
+                                                        <div class="col-lg-12">
+                                                            <div class="text-end">
+                                                                <button type="submit" class="btn btn-success">Change
+                                                                    Password</button>
+                                                            </div>
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row-->
+                                                </form>
+                                            </div>
+                                            <!--end tab-pane-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!--end row-->
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                2022 © Velzon.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    Design & Develop by Themesbrand
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+            <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+    <!--start back-to-top-->
+    <button class="btn btn-danger btn-icon" id="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+    <script nonce="allow">
+        $('#personalDetailsForm').submit((e) => {
+            e.preventDefault();
+
+            const data = $('#personalDetailsForm').serializeArray();
+            const form = new FormData($('#personalDetailsForm')[0]);
+            $.ajax({
+                url: '/admin/user/<%= user._id %>',
+                method: 'PUT',
+                data: form, processData: false,
+                contentType: false,
+                success: (res) => {
+                    //wyswietlic notyfikacje
+                }, error: (err) => {
+                    //notyfikacja błąd
+                }
+            });
+        });
+
+    </script>
+    <%- include('../../components/themeSettings.ejs') %>
+        <!-- TODO czy potrzebne <script nonce="allow">
+            $('#saveConfig').click(() => {
+                const data = {
+                    'data-layout': sessionStorage.getItem('data-layout'),
+                    'data-layout-mode': sessionStorage.getItem('data-layout-mode'),
+                    'data-layout-position': sessionStorage.getItem('data-layout-position'),
+                    'data-layout-style': sessionStorage.getItem('data-layout-style'),
+                    'data-layout-width': sessionStorage.getItem('data-layout-width'),
+                    'data-sidebar': sessionStorage.getItem('data-sidebar'),
+                    'data-sidebar-image': sessionStorage.getItem('data-sidebar-image'),
+                    'data-topbar': sessionStorage.getItem('data-topbar'),
+                }
+
+                const config = JSON.stringify(data);
+                $.ajax({
+                    url: '/admin/user/<%= user._id %>/config',
+                    method: 'PUT',
+                    data: { config },
+                    success: (res) => {
+                        //wyswietlic notyfikacje
+                    }, error: (err) => {
+                        //notyfikacja błąd
+                    }
+                })
+            })
+        </script> -->
+        <%- include('../../components/pageEnd.ejs') %>

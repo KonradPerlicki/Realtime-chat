@@ -2,15 +2,15 @@ import { randomBytes } from 'crypto';
 import passport from 'passport';
 import UserNotFoundException from '../exceptions/userNotFoundException';
 import Token from '../models/Token';
-import User, { UserInterface } from '../models/User';
+import User from '../models/User';
 import Mailer from '../utils/mailer';
 import config from 'config';
 import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { assign } from 'lodash';
-import { createToken } from '../utils/jwt';
-import { Response } from 'express';
-export default class AuthService {
+import MainService from './mainService';
+export default class AuthService extends MainService {
     constructor() {
+        super();
         this.registerGoogleStrategy();
     }
 
@@ -152,18 +152,4 @@ export default class AuthService {
             )
         );
     }
-
-    public registerTokens = (res: Response, user: UserInterface) => {
-        const accessToken = createToken(user, 'access');
-        const refreshToken = createToken(user, 'refresh');
-        res.cookie('accessToken', accessToken, {
-            maxAge: 1000 * 60 * 60, // 60 minutes
-            httpOnly: true,
-        });
-
-        res.cookie('refreshToken', refreshToken, {
-            maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-            httpOnly: true,
-        });
-    };
 }

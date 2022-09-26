@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser';
 import readRecursive from 'fs-readdir-recursive';
 import session from 'express-session';
 import passport from 'passport';
+import fileUpload from 'express-fileupload';
 
 class App {
     public app: Express;
@@ -46,7 +47,12 @@ class App {
             helmet({
                 contentSecurityPolicy: {
                     directives: {
-                        imgSrc: ['*'],
+                        imgSrc: ['*', 'data:'],
+                        scriptSrc: [
+                            "'nonce-allow'",
+                            "'self'",
+                            "'unsafe-inline'",
+                        ],
                     },
                 },
             })
@@ -68,6 +74,7 @@ class App {
         this.app.use(compression());
         //this.app.disable('etag');
         this.app.use(express.static('public/'));
+        this.app.use(fileUpload());
         this.app.set('view engine', 'ejs');
         this.app.set('views', join(__dirname, '../public/views'));
 

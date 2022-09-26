@@ -597,7 +597,9 @@ File: Main Js File
                                                 ? user.username
                                                 : user.email
                                         }</h6>
-                                        <span class="fs-11 mb-0 text-muted">Manager</span>
+                                        <span class="fs-11 mb-0 text-muted">${
+                                            user.title
+                                        }</span>
                                     </div>
                                 </div>
                             </a>`);
@@ -2409,8 +2411,11 @@ function scrollFunction() {
     }
 }
 
+$('#back-to-top').click(topFunction);
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+
+console.log(sessionStorage, localStorage);

@@ -4,7 +4,7 @@ import { createToken, verifyToken } from '../utils/jwt';
 function deserializeUser(req: Request, res: Response, next: NextFunction) {
     const { accessToken, refreshToken } = req.cookies;
 
-    if (!accessToken) {
+    if (!refreshToken) {
         return next();
     }
 

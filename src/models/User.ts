@@ -8,7 +8,12 @@ export interface UserInterface extends Document {
     createdAt: Date;
     updatedAt: Date;
     photo: string;
+    backgroundPhoto: string;
     googleId: string;
+    title: string;
+    firstName: string;
+    lastName: string;
+    description: string;
 
     isValidPassword(password: string): Promise<boolean>;
 }
@@ -29,9 +34,41 @@ const UserSchema = new Schema(
         photo: {
             type: String,
             default: '/assets/images/users/user-dummy-img.jpg',
+            set: (filename: string) => {
+                if (!filename.includes('http'))
+                    return '/assets/images/users/' + filename;
+                else return filename;
+            },
+        },
+        backgroundPhoto: {
+            type: String,
+            default: '/assets/images/profile-bg.jpg',
+            set: (filename: string) => {
+                if (!filename.includes('http'))
+                    return '/assets/images/users/' + filename;
+                else return filename;
+            },
         },
         password: {
             type: String,
+        },
+        title: {
+            type: String,
+            trim: true,
+        },
+        firstName: {
+            type: String,
+            trim: true,
+        },
+        lastName: {
+            type: String,
+            trim: true,
+        },
+        description: {
+            type: String,
+            trim: true,
+            default:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         },
         googleId: {
             type: String,

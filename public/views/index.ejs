@@ -1605,7 +1605,7 @@
     <!-- END layout-wrapper -->
     <script src="assets/js/main.js"></script>
     <!--start back-to-top-->
-    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+    <button class="btn btn-danger btn-icon" id="back-to-top">
         <i class="ri-arrow-up-line"></i>
     </button>
     <% if (errors.length) { %>
@@ -1617,5 +1617,4 @@
                     data-toast-className="success fs-4" data-toast-duration="3000"></span>
                 <% } %>
                     <!--end back-to-top-->
-                    <%- include('components/themeSettings.ejs') %>
-                        <%- include('components/pageEnd.ejs') %>
+                    <%- include('components/pageEnd.ejs') %>

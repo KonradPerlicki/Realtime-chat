@@ -20,7 +20,69 @@ export default class UserController
 
     private initialiseRoutes(): void {
         this.router.get(`${this.path}/:id`, authenticated, this.userProfile);
+        this.router.get(`${this.path}/edit`, authenticated, this.editProfile);
+        this.router.put(
+            `${this.path}/:id`,
+            authenticated,
+            this.updateEditProfile
+        );
+        /* this.router.put(
+            `${this.path}/:id/config`,
+            authenticated,
+            this.updateUserConfig
+        ); */
     }
+
+    /* private updateUserConfig = async (
+        req: Request<{ id: string }, {}, { config: string }>,
+        res: Response,
+        next: NextFunction
+    ) => {
+        const { id } = req.params;
+        const { config } = req.body;
+        try {
+            await this.service.updateUser(id, { config });
+            return res.json({ config });
+        } catch (error: any) {
+            return next(new Error(error.message));
+        }
+    }; */
+
+    private updateEditProfile = async (
+        req: Request<
+            { id: string },
+            {},
+            {
+                firstName: string;
+                lastName: string;
+                title: string;
+                description: string;
+            }
+        >,
+        res: Response,
+        next: NextFunction
+    ) => {
+        const { firstName, lastName, title, description } = req.body;
+        const { id } = req.params;
+        try {
+            const photos = await this.service.uploadFiles(req.files, [
+                'photo',
+                'backgroundPhoto',
+            ]);
+
+            const user = await this.service.updateUser(id, {
+                firstName,
+                lastName,
+                title,
+                description,
+                ...photos,
+            });
+            this.service.registerTokens(res, user);
+            return res.json({ success: true });
+        } catch (error: any) {
+            return next(new Error(error.message));
+        }
+    };
 
     private userProfile = async (
         req: Request<{ id: string }>,
@@ -32,7 +94,7 @@ export default class UserController
         try {
             const user = await this.service.userProfile(id);
             const authenticatedUser = req.user as UserInterface;
-            const owner = authenticatedUser.id === user?._id.toString();
+            const owner = authenticatedUser._id === user?._id.toString();
 
             return res.render(`${this.viewPath}/userProfile`, {
                 usr: user,
@@ -42,5 +104,9 @@ export default class UserController
             //without error so we display 404 page for wrong url
             return next();
         }
+    };
+
+    private editProfile = (req: Request, res: Response) => {
+        return res.render(`${this.viewPath}/editProfile`);
     };
 }

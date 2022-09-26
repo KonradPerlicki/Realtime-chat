@@ -4,10 +4,15 @@ import config from 'config';
 
 const formatUserData = (user: UserInterface) => {
     return {
-        id: user._id.toString() as string,
+        _id: user._id.toString() as string,
         username: user.username,
         email: user.email,
+        title: user.title,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        description: user.description,
         photo: user.photo,
+        backgroundPhoto: user.backgroundPhoto,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
     };

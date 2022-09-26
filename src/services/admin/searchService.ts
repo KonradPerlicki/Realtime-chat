@@ -11,7 +11,7 @@ export default class SearchService {
             {
                 $and: [
                     { $or: [{ username: regex }, { email: regex }] },
-                    { _id: { $ne: user.id } },
+                    { _id: { $ne: user._id } },
                 ],
             },
             {
@@ -19,6 +19,7 @@ export default class SearchService {
                 username: 1,
                 _id: 1,
                 photo: 1,
+                title: 1,
             }
         ).limit(10);
         return data;
