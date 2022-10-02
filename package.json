@@ -34,6 +34,7 @@
     "nodemailer": "^6.7.8",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
+    "socket.io": "^4.5.2",
     "winston": "^3.8.1"
   },
   "devDependencies": {
@@ -54,6 +55,7 @@
     "@types/nodemailer": "^6.4.5",
     "@types/passport": "^1.0.11",
     "@types/passport-google-oauth20": "^2.0.11",
+    "@types/socket.io": "^3.0.2",
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",

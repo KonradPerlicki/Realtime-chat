@@ -48,3 +48,25 @@ toastExamples.forEach(function (element) {
                 : '',
     }).showToast();
 });
+
+function successMessage(msg) {
+    Toastify({
+        newWindow: true,
+        text: msg,
+        gravity: 'top',
+        position: 'center',
+        className: 'bg-success',
+        stopOnFocus: true,
+    }).showToast();
+}
+
+function errorMessage(msg) {
+    Toastify({
+        newWindow: true,
+        text: msg,
+        gravity: 'top',
+        position: 'center',
+        className: 'bg-error',
+        stopOnFocus: true,
+    }).showToast();
+}

@@ -21,7 +21,14 @@ export default class SearchService {
                 photo: 1,
                 title: 1,
             }
-        ).limit(10);
-        return data;
+        ).limit(8);
+
+        const total = await User.count({
+            $and: [
+                { $or: [{ username: regex }, { email: regex }] },
+                { _id: { $ne: user._id } },
+            ],
+        });
+        return { data, total };
     }
 }

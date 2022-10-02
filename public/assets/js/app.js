@@ -571,7 +571,7 @@ File: Main Js File
                 if (inputLength > 0) {
                     dropdown.classList.add('show');
                     searchOptions.classList.remove('d-none');
-
+                    $('#viewAll').remove();
                     var inputVal = searchInput.value;
                     $.ajax({
                         url: '/admin/search',
@@ -582,7 +582,7 @@ File: Main Js File
                         success: (res) => {
                             var list = $('.notification-list');
                             list.empty();
-                            res.forEach((user) => {
+                            res.data.forEach((user) => {
                                 list.append(`<a href="/admin/user/${
                                     user._id
                                 }" class="dropdown-item notify-item py-2">
@@ -598,11 +598,19 @@ File: Main Js File
                                                 : user.email
                                         }</h6>
                                         <span class="fs-11 mb-0 text-muted">${
-                                            user.title
+                                            user.title ? user.title : ''
                                         }</span>
                                     </div>
                                 </div>
                             </a>`);
+                                if (res.total > 8) {
+                                    $('#search-dropdown')
+                                        .append(`<div id="viewAll" class="text-center pt-3 pb-1">
+                                <a href="/admin/search/${inputVal}" class="btn btn-primary btn-sm"
+                                    data-key="t-view-all-results">View All Results
+                                    <i class="ri-arrow-right-line ms-1"></i></a>
+                            </div>`);
+                                }
                             });
                         },
                     });
@@ -2417,5 +2425,3 @@ function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
-
-console.log(sessionStorage, localStorage);

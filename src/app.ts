@@ -13,13 +13,16 @@ import readRecursive from 'fs-readdir-recursive';
 import session from 'express-session';
 import passport from 'passport';
 import fileUpload from 'express-fileupload';
+import http from 'http';
 
-class App {
+export default class App {
     public app: Express;
     private port: number;
+    public static server: http.Server;
 
     constructor(port: number) {
         this.app = express();
+        App.server = http.createServer(this.app);
         this.port = port;
 
         this.initialiseMiddlewares();
@@ -27,7 +30,7 @@ class App {
 
         this.initialisecontrollers();
 
-        this.app.listen(this.port, () => {
+        App.server.listen(this.port, () => {
             logger.info('App listening on port ' + this.port);
         });
     }

@@ -1,5 +1,8 @@
 import { FileArray, UploadedFile } from 'express-fileupload';
+import { ProjectionType } from 'mongoose';
 import { join } from 'path';
+import UserNotFoundException from '../../exceptions/userNotFoundException';
+import User, { UserInterface } from '../../models/User';
 import MainService from '../mainService';
 
 interface UploadedFiles {
@@ -37,5 +40,24 @@ export default class AdminService extends MainService {
             data[name] = fileName;
         });
         return data;
+    }
+
+    public async getUserById(
+        id: string,
+        projection: ProjectionType<UserInterface> = {},
+        throwException = false
+    ) {
+        try {
+            const user = await User.findById(id, projection);
+            if (!user) {
+                throw new Error('This user does not exist');
+            }
+            return user;
+        } catch (error: any) {
+            if (throwException) {
+                throw new UserNotFoundException(error.message);
+            }
+            return null;
+        }
     }
 }

@@ -25,7 +25,8 @@ export default class SearchController
         req: Request<{}, {}, {}, { q: string }>,
         res: Response
     ) => {
-        const data = await this.service.search(req);
-        return res.json(data);
+        const { data, total } = await this.service.search(req);
+
+        return res.json({ data, total });
     };
 }

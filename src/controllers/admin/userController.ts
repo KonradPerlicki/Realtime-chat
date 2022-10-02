@@ -92,12 +92,12 @@ export default class UserController
         const { id } = req.params;
 
         try {
-            const user = await this.service.userProfile(id);
+            const user = await this.service.getUserById(id, {}, true);
             const authenticatedUser = req.user as UserInterface;
             const owner = authenticatedUser._id === user?._id.toString();
 
             return res.render(`${this.viewPath}/userProfile`, {
-                usr: user,
+                searchedUser: user,
                 owner: owner,
             });
         } catch (error: any) {

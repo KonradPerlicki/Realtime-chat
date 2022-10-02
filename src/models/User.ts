@@ -2,6 +2,7 @@ import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface UserInterface extends Document {
+    _id: string;
     username: string;
     email: string;
     password: string | undefined;
@@ -35,7 +36,10 @@ const UserSchema = new Schema(
             type: String,
             default: '/assets/images/users/user-dummy-img.jpg',
             set: (filename: string) => {
-                if (!filename.includes('http'))
+                if (
+                    !filename.includes('http') &&
+                    !filename.includes('/assets/images/users/')
+                )
                     return '/assets/images/users/' + filename;
                 else return filename;
             },
@@ -44,7 +48,10 @@ const UserSchema = new Schema(
             type: String,
             default: '/assets/images/profile-bg.jpg',
             set: (filename: string) => {
-                if (!filename.includes('http'))
+                if (
+                    !filename.includes('http') &&
+                    !filename.includes('/assets/images/users/')
+                )
                     return '/assets/images/users/' + filename;
                 else return filename;
             },
@@ -73,6 +80,7 @@ const UserSchema = new Schema(
         googleId: {
             type: String,
             unique: true,
+            sparse: true,
         },
     },
     { timestamps: true }

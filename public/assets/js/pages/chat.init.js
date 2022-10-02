@@ -40,7 +40,117 @@ document.querySelectorAll('.user-chat-remove').forEach(function (item) {
         });
     });
 });
+//Append New Message
+var getChatList = function (chatid, chatItems) {
+    messageIds++;
 
+    var chatConList = document.getElementById(chatid);
+    var itemList = chatConList.querySelector('.chat-conversation-list');
+
+    if (chatItems != null) {
+        var userId = $('#chatinput-form').data('userId');
+
+        $.ajax({
+            url: '/admin/chat/send',
+            type: 'POST',
+            data: {
+                message: chatItems,
+                to: userId,
+            },
+            success: (res) => {
+                socket.emit('send-message', { msg: chatItems, userId });
+                createMessage(itemList, chatItems, 'right');
+            },
+        });
+    }
+
+    // remove chat list
+    var newChatList = document.getElementById('chat-list-' + messageIds);
+    if (newChatList) {
+        var deleteItems = newChatList.querySelectorAll('.delete-item');
+        if (deleteItems) {
+            newChatList
+                .querySelectorAll('.delete-item')
+                .forEach(function (subitem) {
+                    subitem.addEventListener('click', function () {
+                        itemList.removeChild(newChatList);
+                    });
+                });
+        }
+
+        //Copy Message
+        newChatList
+            .querySelectorAll('.copy-message')
+            .forEach(function (subitem) {
+                subitem.addEventListener('click', function () {
+                    var currentValue =
+                        newChatList.childNodes[1].firstElementChild
+                            .firstElementChild.firstElementChild
+                            .firstElementChild.innerText;
+                    navigator.clipboard.writeText(currentValue);
+                });
+            });
+
+        //Copy Clipboard alert
+        newChatList
+            .querySelectorAll('.copy-message')
+            .forEach(function (subitem) {
+                subitem.addEventListener('click', function () {
+                    document.getElementById('copyClipBoard').style.display =
+                        'block';
+                    setTimeout(hideclipboardNew, 1000);
+
+                    function hideclipboardNew() {
+                        document.getElementById('copyClipBoard').style.display =
+                            'none';
+                    }
+                });
+            });
+
+        //reply Message model
+        newChatList
+            .querySelectorAll('.reply-message')
+            .forEach(function (subitem) {
+                subitem.addEventListener('click', function () {
+                    var replyToggleOpenNew =
+                        document.querySelector('.replyCard');
+                    var replyToggleCloseNew =
+                        document.querySelector('#close_toggle');
+                    var replyMessageNew =
+                        subitem.closest('.ctext-wrap').children[0].children[0]
+                            .innerText;
+                    var replyUserNew = document.querySelector(
+                        '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
+                    ).innerHTML;
+                    isreplyMessage = true;
+                    replyToggleOpenNew.classList.add('show');
+                    replyToggleCloseNew.addEventListener('click', function () {
+                        replyToggleOpenNew.classList.remove('show');
+                    });
+                    var msgOwnerName = subitem.closest('.chat-list')
+                        ? subitem
+                              .closest('.chat-list')
+                              .classList.contains('left')
+                            ? replyUserNew
+                            : 'You'
+                        : replyUserNew;
+                    document.querySelector(
+                        '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
+                    ).innerText = msgOwnerName;
+                    document.querySelector(
+                        '.replyCard .replymessage-block .flex-grow-1 .mb-0'
+                    ).innerText = replyMessageNew;
+                });
+            });
+    }
+};
+
+socket.on('receive-message', (msg) => {
+    var chatConList = document.getElementById('users-chat');
+    var itemList = chatConList.querySelector('.chat-conversation-list');
+    createMessage(itemList, msg, 'left');
+    scrollToBottom(currentChatId);
+});
 // popup image
 var lightbox = GLightbox({
     selector: '.popup-img',
@@ -50,37 +160,6 @@ var lightbox = GLightbox({
 //User current Id
 var currentChatId = 'users-chat';
 scrollToBottom(currentChatId);
-
-// // Scroll to Bottom
-function scrollToBottom(id) {
-    setTimeout(function () {
-        var simpleBar = document
-            .getElementById(id)
-            .querySelector('#chat-conversation .simplebar-content-wrapper')
-            ? document
-                  .getElementById(id)
-                  .querySelector(
-                      '#chat-conversation .simplebar-content-wrapper'
-                  )
-            : '';
-
-        var offsetHeight = document.getElementsByClassName(
-            'chat-conversation-list'
-        )[0]
-            ? document
-                  .getElementById(id)
-                  .getElementsByClassName('chat-conversation-list')[0]
-                  .scrollHeight -
-              window.innerHeight +
-              335
-            : 0;
-        if (offsetHeight)
-            simpleBar.scrollTo({
-                top: offsetHeight,
-                behavior: 'smooth',
-            });
-    }, 100);
-}
 
 //chat form
 var chatForm = document.querySelector('#chatinput-form');
@@ -149,8 +228,6 @@ document.querySelectorAll('#userList li').forEach(function (item) {
         document.querySelector(
             '.user-chat-topbar .text-truncate .username'
         ).innerHTML = username;
-        document.querySelector('.profile-offcanvas .username').innerHTML =
-            username;
 
         if (userProfile) {
             document
@@ -290,117 +367,37 @@ replyMessage.forEach(function (item) {
     });
 });
 
-//Append New Message
-var getChatList = function (chatid, chatItems) {
-    messageIds++;
-    var chatConList = document.getElementById(chatid);
-    var itemList = chatConList.querySelector('.chat-conversation-list');
-
-    if (chatItems != null) {
-        itemList.insertAdjacentHTML(
-            'beforeend',
-            '<li class="chat-list right" id="chat-list-' +
-                messageIds +
-                '" >\
-                <div class="conversation-list">\
-                    <div class="user-chat-content">\
-                        <div class="ctext-wrap">\
-                            <div class="ctext-wrap-content">\
-                                <p class="mb-0 ctext-content">\
-                                    ' +
-                chatItems +
-                '\
-                                </p>\
-                            </div>\
-                            <div class="dropdown align-self-start message-box-drop">\
-                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
-                                    <i class="ri-more-2-fill"></i>\
-                                </a>\
-                                <div class="dropdown-menu">\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between reply-message" href="#" data-bs-toggle="collapse" data-bs-target=".replyCollapse">Reply <i class="bx bx-share ms-2 text-muted"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="#" data-bs-toggle="modal" data-bs-target=".forwardModal">Forward <i class="bx bx-share-alt ms-2 text-muted"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between copy-message" href="#" id="copy-message-' +
-                messageIds +
-                '">Copy <i class="bx bx-copy text-muted ms-2"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">Bookmark <i class="bx bx-bookmarks text-muted ms-2"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between delete-item" id="delete-item-' +
-                messageIds +
-                '" href="#">Delete <i class="bx bx-trash text-muted ms-2"></i></a>\
-                            </div>\
-                        </div>\
-                    </div>\
-                    <div class="conversation-name">\
-                        <small class="text-muted time">' +
-                currentTime() +
-                '</small>\
-                        <span class="text-success check-message-icon"><i class="bx bx-check"></i></span>\
+function createMessage(list, msg, className, time = null) {
+    var date = time ? new Date(time).toDateString() : currentTime();
+    list.insertAdjacentHTML(
+        'beforeend',
+        '<li class="chat-list ' +
+            className +
+            '" id="chat-list-' +
+            messageIds +
+            '" >\
+            <div class="conversation-list">\
+                <div class="user-chat-content">\
+                    <div class="ctext-wrap">\
+                        <div class="ctext-wrap-content">\
+                            <p class="mb-0 ctext-content">\
+                                ' +
+            msg +
+            '\
+                            </p>\
                     </div>\
                 </div>\
+                <div class="conversation-name">\
+                    <small class="text-muted time">' +
+            date +
+            '</small>\
+                    <span class="text-success check-message-icon"></span>\
+                </div>\
             </div>\
-        </li>'
-        );
-    }
-
-    // remove chat list
-    var newChatList = document.getElementById('chat-list-' + messageIds);
-    newChatList.querySelectorAll('.delete-item').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            itemList.removeChild(newChatList);
-        });
-    });
-
-    //Copy Message
-    newChatList.querySelectorAll('.copy-message').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            var currentValue =
-                newChatList.childNodes[1].firstElementChild.firstElementChild
-                    .firstElementChild.firstElementChild.innerText;
-            navigator.clipboard.writeText(currentValue);
-        });
-    });
-
-    //Copy Clipboard alert
-    newChatList.querySelectorAll('.copy-message').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            document.getElementById('copyClipBoard').style.display = 'block';
-            setTimeout(hideclipboardNew, 1000);
-
-            function hideclipboardNew() {
-                document.getElementById('copyClipBoard').style.display = 'none';
-            }
-        });
-    });
-
-    //reply Message model
-    newChatList.querySelectorAll('.reply-message').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            var replyToggleOpenNew = document.querySelector('.replyCard');
-            var replyToggleCloseNew = document.querySelector('#close_toggle');
-            var replyMessageNew =
-                subitem.closest('.ctext-wrap').children[0].children[0]
-                    .innerText;
-            var replyUserNew = document.querySelector(
-                '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
-            ).innerHTML;
-            isreplyMessage = true;
-            replyToggleOpenNew.classList.add('show');
-            replyToggleCloseNew.addEventListener('click', function () {
-                replyToggleOpenNew.classList.remove('show');
-            });
-            var msgOwnerName = subitem.closest('.chat-list')
-                ? subitem.closest('.chat-list').classList.contains('left')
-                    ? replyUserNew
-                    : 'You'
-                : replyUserNew;
-            document.querySelector(
-                '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
-            ).innerText = msgOwnerName;
-            document.querySelector(
-                '.replyCard .replymessage-block .flex-grow-1 .mb-0'
-            ).innerText = replyMessageNew;
-        });
-    });
-};
+        </div>\
+    </li>'
+    );
+}
 
 var messageboxcollapse = 0;
 
@@ -538,37 +535,6 @@ var getReplyChatList = function (chatReplyId, chatReplyItems) {
         });
     });
 };
-
-var emojiPicker = new FgEmojiPicker({
-    trigger: ['.emoji-btn'],
-    removeOnSelection: false,
-    closeButton: true,
-    position: ['top', 'right'],
-    preFetch: true,
-    dir: '../assets/js/pages/plugins/json',
-    insertInto: document.querySelector('.chat-input'),
-});
-
-// emojiPicker position
-var emojiBtn = document.getElementById('emoji-btn');
-emojiBtn.addEventListener('click', function () {
-    setTimeout(function () {
-        var fgEmojiPicker =
-            document.getElementsByClassName('fg-emoji-picker')[0];
-        if (fgEmojiPicker) {
-            var leftEmoji = window.getComputedStyle(fgEmojiPicker)
-                ? window
-                      .getComputedStyle(fgEmojiPicker)
-                      .getPropertyValue('left')
-                : '';
-            if (leftEmoji) {
-                leftEmoji = leftEmoji.replace('px', '');
-                leftEmoji = leftEmoji - 40 + 'px';
-                fgEmojiPicker.style.left = leftEmoji;
-            }
-        }
-    }, 0);
-});
 
 //Search Message
 function searchMessages() {

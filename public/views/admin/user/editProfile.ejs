@@ -262,9 +262,7 @@
                 data: form, processData: false,
                 contentType: false,
                 success: (res) => {
-                    //wyswietlic notyfikacje
-                }, error: (err) => {
-                    //notyfikacja błąd
+                    successMessage('Successfully saved')
                 }
             });
         });

@@ -45,14 +45,16 @@
 
                         <div class="profile-foreground position-relative mx-n4 mt-n4">
                             <div class="profile-wid-bg">
-                                <img src="<%= user.backgroundPhoto %>" alt="" class="profile-wid-img" />
+                                <img src="<%= owner ? user.backgroundPhoto : searchedUser.backgroundPhoto %>" alt=""
+                                    class="profile-wid-img" />
                             </div>
                         </div>
                         <div class="pt-4 mb-4 mb-lg-3 pb-lg-4">
                             <div class="row g-4">
                                 <div class="col-auto">
                                     <div class="avatar-lg">
-                                        <img src="<%= usr.photo %>" crossorigin="anonymous" alt="user-img"
+                                        <img src="<%= owner ? user.photo : searchedUser.photo %>"
+                                            crossorigin="anonymous" alt="user-img"
                                             class="img-thumbnail rounded-circle" />
                                     </div>
                                 </div>
@@ -60,10 +62,15 @@
                                 <div class="col">
                                     <div class="p-2">
                                         <h3 class="text-white mb-1">
-                                            <%= usr.username ? usr.username : usr.email %>
+                                            <% if(owner) { %>
+                                                <%= user.username ? user.username : user.email %>
+                                                    <% }else{ %>
+                                                        <%= searchedUser.username ? searchedUser.username :
+                                                            searchedUser.email %>
+                                                            <% } %>
                                         </h3>
                                         <p class="text-white-75">
-                                            <%= user.title %>
+                                            <%= owner ? user.title : searchedUser.title %>
                                         </p>
                                     </div>
                                 </div>
@@ -107,7 +114,14 @@
                                                 <a href="/admin/user/edit" class="btn btn-success"><i
                                                         class="ri-edit-box-line align-bottom"></i> Edit Profile</a>
                                             </div>
-                                            <% } %>
+                                            <% }else{ %>
+                                                <div class="flex-shrink-0">
+                                                    <a href="/admin/chat?to=<%= searchedUser._id %>">
+                                                        <button type="button"
+                                                            class="btn btn-info bg-gradient waves-effect waves-light">Send
+                                                            message</button></a>
+                                                </div>
+                                                <% } %>
                                     </div>
                                     <!-- Tab panes -->
                                     <div class="tab-content pt-4 text-muted">
@@ -121,22 +135,26 @@
                                                             <div class="table-responsive">
                                                                 <table class="table table-borderless mb-0">
                                                                     <tbody>
-                                                                        <% if(user.firstName){ %>
+                                                                        <% if(user.firstName || (owner &&
+                                                                            searchedUser.firstName)){ %>
                                                                             <tr>
                                                                                 <th class="ps-0" scope="row">First Name
                                                                                     :
                                                                                 </th>
                                                                                 <td class="text-muted">
-                                                                                    <%= user.firstName %>
+                                                                                    <%= owner ? user.firstName :
+                                                                                        searchedUser.firstName %>
                                                                                 </td>
                                                                             </tr>
                                                                             <% } %>
-                                                                                <% if(user.lastName){ %>
+                                                                                <% if(user.lastName || (owner &&
+                                                                                    searchedUser.lastName)){ %>
                                                                                     <tr>
                                                                                         <th class="ps-0" scope="row">
                                                                                             Last Name :</th>
                                                                                         <td class="text-muted">
-                                                                                            <%= user.lastName %>
+                                                                                            <%= owner ? user.lastName :
+                                                                                                searchedUser.lastName %>
                                                                                         </td>
                                                                                     </tr>
                                                                                     <% } %>
@@ -145,7 +163,9 @@
                                                                                                 scope="row">E-mail :
                                                                                             </th>
                                                                                             <td class="text-muted">
-                                                                                                <%= user.email %>
+                                                                                                <%= owner ? user.email :
+                                                                                                    searchedUser.email
+                                                                                                    %>
                                                                                             </td>
                                                                                         </tr>
                                                                                         <tr>
@@ -153,8 +173,9 @@
                                                                                                 scope="row">Joining Date
                                                                                             </th>
                                                                                             <td class="text-muted">
-                                                                                                <%= new
-                                                                                                    Date(user.createdAt).toDateString()
+                                                                                                <%= new Date(owner ?
+                                                                                                    user.createdAt :
+                                                                                                    searchedUser.createdAt).toDateString()
                                                                                                     %>
                                                                                             </td>
                                                                                         </tr>
@@ -334,7 +355,7 @@
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <h5 class="card-title mb-3">About</h5>
-                                                            <%= user.description %>
+                                                            <%= owner ? user.description : searchedUser.description %>
                                                                 <!--end row-->
                                                         </div>
                                                         <!--end card-body-->
@@ -2782,9 +2803,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script> © Velzon.
+                                2022 © Velzon.
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block">
@@ -2804,5 +2823,4 @@
         <i class="ri-arrow-up-line"></i>
     </button>
     <!--end back-to-top-->
-
     <%- include('../../components/pageEnd.ejs') %>
