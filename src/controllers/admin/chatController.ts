@@ -52,13 +52,15 @@ export default class ChatController
         res: Response
     ) => {
         const { to: toUser } = req.query;
-        const selectedUser = await this.service.getUserById(toUser);
+        const selectedUser = await this.service.getUserById(toUser, {
+            password: 0,
+        });
         const user = req.user as UserInterface;
         const conversations = await this.service.getConversationsWith(user._id);
 
         return res.render(`${this.viewPath}/chat`, {
             selectedUser,
-            conversations,
+            conversations: conversations,
         });
     };
 

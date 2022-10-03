@@ -89,19 +89,22 @@
                                                                 selectedUser.id!==conversation.userInfo._id.toString()){
                                                                 %>
                                                                 <% if (!selectedUser && key===0) { %>
-                                                                    <%- include('component/directMessage.ejs', {active:
-                                                                        true, selectedUser: conversation.userInfo}) %>
+                                                                    <%- include('component/directMessage.ejs',
+                                                                        {active:true, selectedUser:
+                                                                        conversation.userInfo}) %>
                                                                         <% }else{ %>
-                                                                            <%- include('component/directMessage.ejs',
-                                                                                {active: false, selectedUser:
-                                                                                conversation.userInfo}) %>
+                                                                            <%- include('component/directMessage.ejs',{active:
+                                                                                false,
+                                                                                selectedUser:conversation.userInfo}) %>
                                                                                 <% } %>
                                                                                     <% }else{ %>
-                                                                                        <%- include('component/directMessage.ejs',
-                                                                                            {active: key===0,
-                                                                                            selectedUser:
-                                                                                            conversation.userInfo}) %>
-                                                                                            <% }}) %>
+                                                                                        <% if(!selectedUser){ %>
+                                                                                            <%- include('component/directMessage.ejs',
+                                                                                                {active:
+                                                                                                key===0,selectedUser:conversation.userInfo})
+                                                                                                %>
+                                                                                                <% } %>
+                                                                                                    <% }}) %>
                                         </ul>
                                     </div>
                                 </div>
