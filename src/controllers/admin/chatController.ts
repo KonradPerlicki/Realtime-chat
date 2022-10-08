@@ -1,5 +1,4 @@
-import { Request, Response } from 'express';
-import { NextFunction } from 'express-serve-static-core';
+import { Request, Response, NextFunction } from 'express';
 import authenticated from '../../middleware/authenticated';
 import { UserInterface } from '../../models/User';
 import ChatService from '../../services/admin/chatService';
