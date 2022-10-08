@@ -19,6 +19,7 @@ export default class IndexController
     }
 
     private index(req: Request, res: Response) {
+        res.redirect('/admin/chat');
         return res.render('index');
     }
 }

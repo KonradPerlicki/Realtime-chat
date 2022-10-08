@@ -108,7 +108,7 @@ export default class AuthController
         const user = req.user as UserInterface;
         this.service.registerTokens(res, user);
 
-        return res.redirect('/admin');
+        return res.redirect('/admin/chat');
     };
 
     private handleGoogleError = (req: Request, res: Response) => {

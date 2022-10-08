@@ -14,7 +14,7 @@ $('#registerForm').submit((e) => {
         method: 'POST',
         data: { username, password, email, passwordConfirmation },
         success: (res) => {
-            window.location.href = '/admin';
+            window.location.href = '/admin/chat';
         },
         error: (res) => {
             const data = JSON.parse(res.responseText);

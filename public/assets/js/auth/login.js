@@ -9,7 +9,7 @@ $('#loginForm').submit((e) => {
         method: 'POST',
         data: { username, password },
         success: (res) => {
-            window.location.href = '/admin';
+            window.location.href = '/admin/chat';
         },
         error: (err) => {
             console.log(err);

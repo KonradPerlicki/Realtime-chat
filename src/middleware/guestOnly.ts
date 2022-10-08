@@ -9,7 +9,7 @@ export default function guestOnly(
         res.cookie('errors', ['User already authenticated.'], {
             httpOnly: true,
         });
-        return res.redirect('/');
+        return res.redirect('/admin/chat');
     }
     return next();
 }

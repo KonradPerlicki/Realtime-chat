@@ -1,40 +1,6 @@
 <%- include('../../components/pageHead.ejs') %>
     <div id="layout-wrapper">
         <%- include('../../components/header.ejs') %>
-            <!-- ========== App Menu ========== -->
-            <div class="app-menu navbar-menu">
-                <!-- LOGO -->
-                <div class="navbar-brand-box">
-                    <!-- Dark Logo-->
-                    <a href="index.html" class="logo logo-dark">
-                        <span class="logo-sm">
-                            <img src="/assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="/assets/images/logo-dark.png" alt="" height="17">
-                        </span>
-                    </a>
-                    <!-- Light Logo-->
-                    <a href="index.html" class="logo logo-light">
-                        <span class="logo-sm">
-                            <img src="/assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="/assets/images/logo-light.png" alt="" height="17">
-                        </span>
-                    </a>
-                    <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
-                        id="vertical-hover">
-                        <i class="ri-record-circle-line"></i>
-                    </button>
-                </div>
-
-                <div id="scrollbar">
-                    <%- include('../../components/leftMenu.ejs') %>
-                </div>
-
-                <div class="sidebar-background"></div>
-            </div>
             <!-- Left Sidebar End -->
             <!-- Vertical Overlay-->
             <div class="vertical-overlay"></div>
@@ -226,22 +192,6 @@
                     </div>
                     <!-- container-fluid -->
                 </div>
-                <!-- End Page-content -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                2022 © Velzon.
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-sm-end d-none d-sm-block">
-                                    Design & Develop by Themesbrand
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-
             </div>
             <!-- end main content-->
     </div>
@@ -268,31 +218,4 @@
         });
 
     </script>
-    <%- include('../../components/themeSettings.ejs') %>
-        <!-- TODO czy potrzebne <script nonce="allow">
-            $('#saveConfig').click(() => {
-                const data = {
-                    'data-layout': sessionStorage.getItem('data-layout'),
-                    'data-layout-mode': sessionStorage.getItem('data-layout-mode'),
-                    'data-layout-position': sessionStorage.getItem('data-layout-position'),
-                    'data-layout-style': sessionStorage.getItem('data-layout-style'),
-                    'data-layout-width': sessionStorage.getItem('data-layout-width'),
-                    'data-sidebar': sessionStorage.getItem('data-sidebar'),
-                    'data-sidebar-image': sessionStorage.getItem('data-sidebar-image'),
-                    'data-topbar': sessionStorage.getItem('data-topbar'),
-                }
-
-                const config = JSON.stringify(data);
-                $.ajax({
-                    url: '/admin/user/<%= user._id %>/config',
-                    method: 'PUT',
-                    data: { config },
-                    success: (res) => {
-                        //wyswietlic notyfikacje
-                    }, error: (err) => {
-                        //notyfikacja błąd
-                    }
-                })
-            })
-        </script> -->
-        <%- include('../../components/pageEnd.ejs') %>
+    <%- include('../../components/pageEnd.ejs') %>

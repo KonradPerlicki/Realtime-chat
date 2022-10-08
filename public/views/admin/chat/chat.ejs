@@ -1,62 +1,13 @@
 <%- include('../../components/pageHead.ejs') %>
     <div id="layout-wrapper">
         <%- include('../../components/header.ejs') %>
-            <!-- ========== App Menu ========== -->
-            <div class="app-menu navbar-menu">
-                <!-- LOGO -->
-                <div class="navbar-brand-box">
-                    <!-- Dark Logo-->
-                    <a href="index.html" class="logo logo-dark">
-                        <span class="logo-sm">
-                            <img src="/assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="/assets/images/logo-dark.png" alt="" height="17">
-                        </span>
-                    </a>
-                    <!-- Light Logo-->
-                    <a href="index.html" class="logo logo-light">
-                        <span class="logo-sm">
-                            <img src="/assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="/assets/images/logo-light.png" alt="" height="17">
-                        </span>
-                    </a>
-                    <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
-                        id="vertical-hover">
-                        <i class="ri-record-circle-line"></i>
-                    </button>
-                </div>
 
-                <div id="scrollbar">
-                    <%- include('../../components/leftMenu.ejs') %>
-                        <!-- Sidebar -->
-                </div>
-
-                <div class="sidebar-background"></div>
-            </div>
-            <!-- Left Sidebar End -->
             <!-- Vertical Overlay-->
             <div class="vertical-overlay"></div>
             <div class="main-content">
-                <div class="page-content">
+                <div class="page-content" style="padding-bottom:0">
                     <div class="container-fluid">
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0">Chat</h4>
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="#">Apps</a></li>
-                                            <li class="breadcrumb-item active">Chat</li>
-                                        </ol>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
                         <!-- end page title -->
 
                         <div class="chat-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1">
@@ -134,7 +85,6 @@
                                                                         <img crossorigin="anonymous" src=""
                                                                             class="chatterPhoto rounded-circle avatar-xs"
                                                                             alt="">
-                                                                        <span class="user-status"></span>
                                                                     </div>
                                                                     <div class="flex-grow-1 overflow-hidden">
                                                                         <h5 class="text-truncate mb-0 fs-16"><a
@@ -169,7 +119,8 @@
                                             </div>
                                             <!-- end chat user head -->
 
-                                            <div class="position-relative" id="users-chat">
+                                            <div class="position-relative" style="height:calc(100vh - 246px)"
+                                                id="users-chat">
                                                 <div class="chat-conversation p-3 p-lg-4 " id="chat-conversation"
                                                     data-simplebar>
                                                     <ul class="list-unstyled chat-conversation-list"
@@ -212,24 +163,6 @@
                                                 </form>
                                             </div>
 
-                                            <div class="replyCard">
-                                                <div class="card mb-0">
-                                                    <div class="card-body py-3">
-                                                        <div class="replymessage-block mb-0 d-flex align-items-start">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="conversation-name"></h5>
-                                                                <p class="mb-0"></p>
-                                                            </div>
-                                                            <div class="flex-shrink-0">
-                                                                <button type="button" id="close_toggle"
-                                                                    class="btn btn-sm btn-link mt-n2 me-n3 fs-18">
-                                                                    <i class="bx bx-x align-middle"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -292,20 +225,6 @@
                     <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                2022 © Velzon.
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-sm-end d-none d-sm-block">
-                                    Design & Develop by Themesbrand
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
 
             </div>
             <!-- end main content-->

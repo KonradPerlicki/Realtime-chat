@@ -13,7 +13,6 @@ File: Main Js File
     /**
      *  global variables
      */
-    var navbarMenuHTML = document.querySelector('.navbar-menu').innerHTML;
     var horizontalMenuSplit = 7; // after this number all horizontal menus will be moved in More menu options
     var default_lang = 'en'; // set Default Language
     var language = localStorage.getItem('language');
@@ -434,8 +433,6 @@ File: Main Js File
             (isTwoColumn == 'twocolumn' ||
                 defaultValues['data-layout'] == 'twocolumn')
         ) {
-            document.querySelector('.navbar-menu').innerHTML = navbarMenuHTML;
-
             var ul = document.createElement('ul');
             ul.innerHTML =
                 '<a href="#" class="logo"><img src="/assets/images/logo-sm.png" alt="" height="22"></a>';
@@ -706,46 +703,6 @@ File: Main Js File
         }
     }
 
-    function initLeftMenuCollapse() {
-        /**
-         * Vertical layout menu scroll add
-         */
-        if (
-            document.documentElement.getAttribute('data-layout') == 'vertical'
-        ) {
-            document.querySelector('.navbar-menu').innerHTML = navbarMenuHTML;
-
-            document
-                .getElementById('scrollbar')
-                .setAttribute('data-simplebar', '');
-            document
-                .getElementById('navbar-nav')
-                .setAttribute('data-simplebar', '');
-            document.getElementById('scrollbar').classList.add('h-100');
-        }
-
-        /**
-         * Two-column layout menu scroll add
-         */
-        if (
-            document.documentElement.getAttribute('data-layout') == 'twocolumn'
-        ) {
-            document
-                .getElementById('scrollbar')
-                .removeAttribute('data-simplebar');
-            document.getElementById('scrollbar').classList.remove('h-100');
-        }
-
-        /**
-         * Horizontal layout menu
-         */
-        if (
-            document.documentElement.getAttribute('data-layout') == 'horizontal'
-        ) {
-            updateHorizontalMenus();
-        }
-    }
-
     function isLoadBodyElement() {
         var verticalOverlay =
             document.getElementsByClassName('vertical-overlay');
@@ -1004,11 +961,8 @@ File: Main Js File
                 document.documentElement.getAttribute('data-layout');
             if (isTwoColumn == 'twocolumn') {
                 initTwoColumnActiveMenu();
-            } else {
-                initActiveMenu();
             }
             isLoadBodyElement();
-            addEventListenerOnSmHoverMenu();
         });
         if (document.getElementById('topnav-hamburger-icon')) {
             document
@@ -1025,123 +979,6 @@ File: Main Js File
             document.documentElement.scrollTop >= 50
                 ? pageTopbar.classList.add('topbar-shadow')
                 : pageTopbar.classList.remove('topbar-shadow');
-        }
-    }
-
-    // Two-column menu activation
-    function initTwoColumnActiveMenu() {
-        feather.replace();
-        // two column sidebar active js
-        var currentPath =
-            location.pathname == '/' ? '/' : location.pathname.substring(1);
-        currentPath = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-        if (currentPath) {
-            // navbar-nav
-            var a = document
-                .getElementById('navbar-nav')
-                .querySelector('[href="' + currentPath + '"]');
-            if (a) {
-                a.classList.add('active');
-                var parentCollapseDiv = a.closest('.collapse.menu-dropdown');
-                if (
-                    parentCollapseDiv &&
-                    parentCollapseDiv.parentElement.closest(
-                        '.collapse.menu-dropdown'
-                    )
-                ) {
-                    parentCollapseDiv.classList.add('show');
-                    parentCollapseDiv.parentElement.children[0].classList.add(
-                        'active'
-                    );
-                    parentCollapseDiv.parentElement
-                        .closest('.collapse.menu-dropdown')
-                        .parentElement.classList.add('twocolumn-item-show');
-                } else {
-                    a.closest(
-                        '.collapse.menu-dropdown'
-                    ).parentElement.classList.add('twocolumn-item-show');
-                }
-            } else {
-                document.body.classList.add('twocolumn-panel');
-            }
-        }
-    }
-
-    // two-column sidebar active js
-    function initActiveMenu() {
-        var currentPath =
-            location.pathname == '/' ? '/' : location.pathname.substring(1);
-        currentPath = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-        if (currentPath) {
-            // navbar-nav
-            var a = document
-                .getElementById('navbar-nav')
-                .querySelector('[href="' + currentPath + '"]');
-            if (a) {
-                a.classList.add('active');
-                var parentCollapseDiv = a.closest('.collapse.menu-dropdown');
-                if (parentCollapseDiv) {
-                    parentCollapseDiv.classList.add('show');
-                    parentCollapseDiv.parentElement.children[0].classList.add(
-                        'active'
-                    );
-                    parentCollapseDiv.parentElement.children[0].setAttribute(
-                        'aria-expanded',
-                        'true'
-                    );
-                    if (
-                        parentCollapseDiv.parentElement.closest(
-                            '.collapse.menu-dropdown'
-                        )
-                    ) {
-                        parentCollapseDiv.parentElement
-                            .closest('.collapse')
-                            .classList.add('show');
-                        if (
-                            parentCollapseDiv.parentElement.closest('.collapse')
-                                .previousElementSibling
-                        )
-                            parentCollapseDiv.parentElement
-                                .closest('.collapse')
-                                .previousElementSibling.classList.add('active');
-
-                        if (
-                            parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(
-                                '.collapse.menu-dropdown'
-                            )
-                        ) {
-                            parentCollapseDiv.parentElement.parentElement.parentElement.parentElement
-                                .closest('.collapse')
-                                .classList.add('show');
-                            if (
-                                parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(
-                                    '.collapse'
-                                ).previousElementSibling
-                            ) {
-                                parentCollapseDiv.parentElement.parentElement.parentElement.parentElement
-                                    .closest('.collapse')
-                                    .previousElementSibling.classList.add(
-                                        'active'
-                                    );
-                                if (
-                                    document.documentElement.getAttribute(
-                                        'data-layout'
-                                    ) == 'horizontal' &&
-                                    parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(
-                                        '.collapse'
-                                    )
-                                ) {
-                                    parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
-                                        .closest('.collapse')
-                                        .previousElementSibling.classList.add(
-                                            'active'
-                                        );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -1295,8 +1132,6 @@ File: Main Js File
     }
 
     function updateHorizontalMenus() {
-        document.querySelector('.navbar-menu').innerHTML = navbarMenuHTML;
-
         document.getElementById('scrollbar').removeAttribute('data-simplebar');
         document.getElementById('navbar-nav').removeAttribute('data-simplebar');
         document.getElementById('scrollbar').classList.remove('h-100');
@@ -1338,7 +1173,6 @@ File: Main Js File
 
     function hideShowLayoutOptions(dataLayout) {
         if (dataLayout == 'vertical') {
-            document.querySelector('.navbar-menu').innerHTML = navbarMenuHTML;
             if (document.getElementById('theme-settings-offcanvas')) {
                 document.getElementById('sidebar-size').style.display = 'block';
                 document.getElementById('sidebar-view').style.display = 'block';
@@ -1349,9 +1183,6 @@ File: Main Js File
                     'block';
                 document.getElementById('layout-width').style.display = 'block';
             }
-            initLeftMenuCollapse();
-            initActiveMenu();
-            addEventListenerOnSmHoverMenu();
             initMenuItemScroll();
         } else if (dataLayout == 'horizontal') {
             updateHorizontalMenus();
@@ -1364,7 +1195,6 @@ File: Main Js File
                     'block';
                 document.getElementById('layout-width').style.display = 'block';
             }
-            initActiveMenu();
         } else if (dataLayout == 'twocolumn') {
             document
                 .getElementById('scrollbar')
@@ -1383,37 +1213,6 @@ File: Main Js File
         }
     }
 
-    // add listener Sidebar Hover icon on change layout from setting
-    function addEventListenerOnSmHoverMenu() {
-        document
-            .getElementById('vertical-hover')
-            .addEventListener('click', function () {
-                if (
-                    document.documentElement.getAttribute(
-                        'data-sidebar-size'
-                    ) === 'sm-hover'
-                ) {
-                    document.documentElement.setAttribute(
-                        'data-sidebar-size',
-                        'sm-hover-active'
-                    );
-                } else if (
-                    document.documentElement.getAttribute(
-                        'data-sidebar-size'
-                    ) === 'sm-hover-active'
-                ) {
-                    document.documentElement.setAttribute(
-                        'data-sidebar-size',
-                        'sm-hover'
-                    );
-                } else {
-                    document.documentElement.setAttribute(
-                        'data-sidebar-size',
-                        'sm-hover'
-                    );
-                }
-            });
-    }
     // set full layout
     function layoutSwitch(isLayoutAttributes) {
         switch (isLayoutAttributes) {
@@ -2357,7 +2156,6 @@ File: Main Js File
         initModeSetting();
         windowLoadContent();
         counter();
-        initLeftMenuCollapse();
         initTopbarComponents();
         initComponents();
         resetLayout();
