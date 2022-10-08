@@ -31,7 +31,7 @@ export default class App {
 
         this.initialisecontrollers();
 
-        App.server.listen(this.port, () => {
+        App.server.listen(process.env.PORT || this.port, () => {
             logger.info('App listening on port ' + this.port);
         });
     }
