@@ -14,6 +14,7 @@ import session from 'express-session';
 import passport from 'passport';
 import fileUpload from 'express-fileupload';
 import http from 'http';
+import flashData from './middleware/flashData';
 
 export default class App {
     public app: Express;
@@ -75,22 +76,13 @@ export default class App {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(compression());
-        //this.app.disable('etag');
         this.app.use(express.static('public/'));
         this.app.use(fileUpload());
         this.app.set('view engine', 'ejs');
         this.app.set('views', join(__dirname, '../public/views'));
 
         this.app.use(deserializeUser);
-        this.app.use((req, res, next) => {
-            const { errors, success } = req.cookies;
-            res.clearCookie('errors');
-            res.clearCookie('success');
-            res.locals.errors = errors ?? [];
-            res.locals.success = success ?? [];
-
-            return next();
-        });
+        this.app.use(flashData);
     }
 
     private initialiseErrorHandling(): void {

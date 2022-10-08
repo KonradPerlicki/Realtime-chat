@@ -26,27 +26,7 @@ export default class UserController
             authenticated,
             this.updateEditProfile
         );
-        /* this.router.put(
-            `${this.path}/:id/config`,
-            authenticated,
-            this.updateUserConfig
-        ); */
     }
-
-    /* private updateUserConfig = async (
-        req: Request<{ id: string }, {}, { config: string }>,
-        res: Response,
-        next: NextFunction
-    ) => {
-        const { id } = req.params;
-        const { config } = req.body;
-        try {
-            await this.service.updateUser(id, { config });
-            return res.json({ config });
-        } catch (error: any) {
-            return next(new Error(error.message));
-        }
-    }; */
 
     private updateEditProfile = async (
         req: Request<
