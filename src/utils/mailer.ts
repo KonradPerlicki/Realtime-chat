@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import config from 'config';
 import { renderFile } from 'ejs';
 import { join } from 'path';
 
@@ -8,10 +7,10 @@ export default class Mailer {
     private author = 'Konrad Perlicki <konrad.perlicki01@gmail.com';
 
     constructor() {
-        const port = config.get<number>('mail_port');
-        const host = config.get<string>('mail_host');
-        const user = config.get<string>('mail_user');
-        const password = config.get<string>('mail_password');
+        const port = Number(process.env.mail_port);
+        const host = <string>process.env.mail_host;
+        const user = <string>process.env.mail_user;
+        const password = <string>process.env.mail_password;
         this.transporter = nodemailer.createTransport({
             host: host,
             port: port,

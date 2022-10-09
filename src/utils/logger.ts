@@ -1,5 +1,4 @@
 import winston from 'winston';
-import config from 'config';
 import dayjs from 'dayjs';
 import { capitalize } from 'lodash';
 
@@ -24,7 +23,7 @@ const logger = winston.createLogger({
     ],
 });
 
-if (config.get<string>('env') !== 'prod') {
+if (<string>process.env.env !== 'prod') {
     logger.add(
         new winston.transports.Console({
             format: winston.format.combine(winston.format.colorize(), myFormat),

@@ -4,7 +4,6 @@ import UserNotFoundException from '../exceptions/userNotFoundException';
 import Token from '../models/Token';
 import User from '../models/User';
 import Mailer from '../utils/mailer';
-import config from 'config';
 import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { assign } from 'lodash';
 import MainService from './mainService';
@@ -114,9 +113,9 @@ export default class AuthService extends MainService {
             new Strategy(
                 {
                     scope: ['profile', 'email'],
-                    clientID: config.get<string>('google_client_id'),
-                    clientSecret: config.get<string>('google_client_secret'),
-                    callbackURL: config.get<string>('google_callback_url'),
+                    clientID: <string>process.env.google_client_id,
+                    clientSecret: <string>process.env.google_client_secret,
+                    callbackURL: <string>process.env.google_callback_url,
                 },
                 async function (
                     accessToken: string,

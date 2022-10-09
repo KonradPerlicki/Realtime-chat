@@ -1,5 +1,4 @@
 import express, { Express } from 'express';
-import config from 'config';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
@@ -15,6 +14,8 @@ import passport from 'passport';
 import fileUpload from 'express-fileupload';
 import http from 'http';
 import flashData from './middleware/flashData';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default class App {
     public app: Express;
@@ -66,7 +67,7 @@ export default class App {
         this.app.use(express.json());
         this.app.use(
             session({
-                secret: config.get<string>('session_secret'),
+                secret: <string>process.env.session_secret,
                 resave: true,
                 saveUninitialized: true,
             })
@@ -91,7 +92,7 @@ export default class App {
     }
 
     private connectToDb(): void {
-        const dbUri = config.get<string>('dbUri');
+        const dbUri = <string>process.env.dbUri;
 
         mongoose.connect(dbUri).then(() => {
             logger.info('DB connection established');
@@ -99,6 +100,6 @@ export default class App {
     }
 }
 
-const port = config.get<number>('port');
+const port = Number(process.env.port);
 
 new App(port);
