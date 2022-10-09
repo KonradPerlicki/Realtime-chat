@@ -64,7 +64,9 @@ export default class AuthService extends MainService {
         });
         const subject = 'Password change request';
         const templateData = {
-            url: `${process.env.url}/admin/reset-password?token=${token.token}&id=${user._id}`,
+            url: `${process.env.url}:${
+                process.env.PORT || process.env.port
+            }/admin/reset-password?token=${token.token}&id=${user._id}`,
         };
 
         await Mailer.send(email, subject, 'forgotPassword', templateData);

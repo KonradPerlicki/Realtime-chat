@@ -8,11 +8,7 @@ import AdminService from './adminService';
 interface SocketSendMessage {
     msg: string;
     userId: string;
-}
-
-interface SocketUsers {
-    userID: string;
-    userDbId: string;
+    from: string;
 }
 
 export default class ChatService extends AdminService {
@@ -33,9 +29,10 @@ export default class ChatService extends AdminService {
             socket.join((socket as any).userId);
 
             socket.on('send-message', (data: SocketSendMessage) => {
-                this.socket.io
-                    .to(data.userId)
-                    .emit('receive-message', data.msg);
+                this.socket.io.to(data.userId).emit('receive-message', {
+                    msg: data.msg,
+                    from: data.from,
+                });
             });
         });
     }

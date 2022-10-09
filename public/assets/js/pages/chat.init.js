@@ -58,7 +58,12 @@ var getChatList = function (chatid, chatItems) {
                 to: userId,
             },
             success: (res) => {
-                socket.emit('send-message', { msg: chatItems, userId });
+                var currentUserId = $('#currentUserId').data('id');
+                socket.emit('send-message', {
+                    msg: chatItems,
+                    userId,
+                    from: currentUserId,
+                });
                 createMessage(itemList, chatItems, 'right');
             },
         });
@@ -109,11 +114,14 @@ var getChatList = function (chatid, chatItems) {
     }
 };
 
-socket.on('receive-message', (msg) => {
-    var chatConList = document.getElementById('users-chat');
-    var itemList = chatConList.querySelector('.chat-conversation-list');
-    createMessage(itemList, msg, 'left');
-    scrollToBottom(currentChatId);
+socket.on('receive-message', (data) => {
+    var userId = $('#chatinput-form').data('userId');
+    if (userId == data.from) {
+        var chatConList = document.getElementById('users-chat');
+        var itemList = chatConList.querySelector('.chat-conversation-list');
+        createMessage(itemList, data.msg, 'left');
+        scrollToBottom(currentChatId);
+    }
 });
 // popup image
 var lightbox = GLightbox({
