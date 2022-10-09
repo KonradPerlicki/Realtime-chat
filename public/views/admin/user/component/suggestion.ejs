@@ -1,0 +1,16 @@
+<div class="d-flex align-items-center py-3">
+    <div class="avatar-xs flex-shrink-0 me-3">
+        <img src="<%= suggestion.photo %>" crossorigin="anonymous" alt="" class="img-fluid rounded-circle" />
+    </div>
+    <div class="flex-grow-1">
+        <div>
+            <h5 class="fs-14 mb-1">
+                <%= (suggestion.firstName && suggestion.lastName) ? suggestion.firstName+' '+suggestion.lastName : suggestion.username ? suggestion.username : suggestion.email %></h5>
+            <p class="fs-13 text-muted mb-0"><%= suggestion.title %></p>
+        </div>
+    </div>
+    <div class="flex-shrink-0 ms-2">
+        <a href="/admin/chat?to=<%= suggestion._id %>" class="btn btn-sm btn-outline-success"><i
+                class="ri-message-line align-middle"></i></a>
+    </div>
+</div>

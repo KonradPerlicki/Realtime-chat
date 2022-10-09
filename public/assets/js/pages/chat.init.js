@@ -106,42 +106,6 @@ var getChatList = function (chatid, chatItems) {
                     }
                 });
             });
-
-        //reply Message model
-        newChatList
-            .querySelectorAll('.reply-message')
-            .forEach(function (subitem) {
-                subitem.addEventListener('click', function () {
-                    var replyToggleOpenNew =
-                        document.querySelector('.replyCard');
-                    var replyToggleCloseNew =
-                        document.querySelector('#close_toggle');
-                    var replyMessageNew =
-                        subitem.closest('.ctext-wrap').children[0].children[0]
-                            .innerText;
-                    var replyUserNew = document.querySelector(
-                        '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
-                    ).innerHTML;
-                    isreplyMessage = true;
-                    replyToggleOpenNew.classList.add('show');
-                    replyToggleCloseNew.addEventListener('click', function () {
-                        replyToggleOpenNew.classList.remove('show');
-                    });
-                    var msgOwnerName = subitem.closest('.chat-list')
-                        ? subitem
-                              .closest('.chat-list')
-                              .classList.contains('left')
-                            ? replyUserNew
-                            : 'You'
-                        : replyUserNew;
-                    document.querySelector(
-                        '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
-                    ).innerText = msgOwnerName;
-                    document.querySelector(
-                        '.replyCard .replymessage-block .flex-grow-1 .mb-0'
-                    ).innerText = replyMessageNew;
-                });
-            });
     }
 };
 
@@ -211,9 +175,6 @@ if (chatForm) {
             scrollToBottom(chatId || chatReplyId);
         }
         chatInput.value = '';
-
-        //reply msg remove textarea
-        document.getElementById('close_toggle').click();
     });
 }
 
@@ -320,141 +281,6 @@ function createMessage(list, msg, className, time = null) {
 }
 
 var messageboxcollapse = 0;
-
-//message with reply
-var getReplyChatList = function (chatReplyId, chatReplyItems) {
-    var chatReplyUser = document.querySelector(
-        '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
-    ).innerHTML;
-    var chatReplyMessage = document.querySelector(
-        '.replyCard .replymessage-block .flex-grow-1 .mb-0'
-    ).innerText;
-
-    messageIds++;
-    var chatreplyConList = document.getElementById(chatReplyId);
-    var itemReplyList = chatreplyConList.querySelector(
-        '.chat-conversation-list'
-    );
-    if (chatReplyItems != null) {
-        itemReplyList.insertAdjacentHTML(
-            'beforeend',
-            '<li class="chat-list right" id="chat-list-' +
-                messageIds +
-                '" >\
-                <div class="conversation-list">\
-                    <div class="user-chat-content">\
-                        <div class="ctext-wrap">\
-                            <div class="ctext-wrap-content">\
-                            <div class="replymessage-block mb-0 d-flex align-items-start">\
-                        <div class="flex-grow-1">\
-                            <h5 class="conversation-name">' +
-                chatReplyUser +
-                '</h5>\
-                            <p class="mb-0">' +
-                chatReplyMessage +
-                '</p>\
-                        </div>\
-                        <div class="flex-shrink-0">\
-                            <button type="button" class="btn btn-sm btn-link mt-n2 me-n3 font-size-18">\
-                            </button>\
-                        </div>\
-                    </div>\
-                                <p class="mb-0 ctext-content mt-1">\
-                                    ' +
-                chatReplyItems +
-                '\
-                                </p>\
-                            </div>\
-                            <div class="dropdown align-self-start message-box-drop">\
-                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
-                                    <i class="ri-more-2-fill"></i>\
-                                </a>\
-                                <div class="dropdown-menu">\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between reply-message" href="#" data-bs-toggle="collapse"  data-bs-target=".replyCollapse">Reply <i class="bx bx-share ms-2 text-muted"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="#" data-bs-toggle="modal" data-bs-target=".forwardModal">Forward <i class="bx bx-share-alt ms-2 text-muted"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between copy-message" href="#" id="copy-message-' +
-                messageIds +
-                '">Copy <i class="bx bx-copy text-muted ms-2"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">Bookmark <i class="bx bx-bookmarks text-muted ms-2"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">Mark as Unread <i class="bx bx-message-error text-muted ms-2"></i></a>\
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between delete-item" id="delete-item-' +
-                messageIds +
-                '" href="#">Delete <i class="bx bx-trash text-muted ms-2"></i></a>\
-                            </div>\
-                        </div>\
-                    </div>\
-                    <div class="conversation-name">\
-                        <small class="text-muted time">' +
-                currentTime() +
-                '</small>\
-                        <span class="text-success check-message-icon"><i class="bx bx-check"></i></span>\
-                    </div>\
-                </div>\
-            </div>\
-        </li>'
-        );
-        messageboxcollapse++;
-    }
-
-    // remove chat list
-    var newChatList = document.getElementById('chat-list-' + messageIds);
-    newChatList.querySelectorAll('.delete-item').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            itemList.removeChild(newChatList);
-        });
-    });
-
-    //Copy Clipboard alert
-    newChatList.querySelectorAll('.copy-message').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            document.getElementById('copyClipBoard').style.display = 'block';
-            document.getElementById('copyClipBoardChannel').style.display =
-                'block';
-            setTimeout(hideclipboardNew, 1000);
-
-            function hideclipboardNew() {
-                document.getElementById('copyClipBoard').style.display = 'none';
-                document.getElementById('copyClipBoardChannel').style.display =
-                    'none';
-            }
-        });
-    });
-
-    newChatList.querySelectorAll('.reply-message').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            var replyMessage =
-                subitem.closest('.ctext-wrap').children[0].children[0]
-                    .innerText;
-            var replyuser = document.querySelector(
-                '.user-chat-topbar .text-truncate .username'
-            ).innerHTML;
-            document.querySelector(
-                '.replyCard .replymessage-block .flex-grow-1 .mb-0'
-            ).innerText = replyMessage;
-            var msgOwnerName = subitem.closest('.chat-list')
-                ? subitem.closest('.chat-list').classList.contains('left')
-                    ? replyuser
-                    : 'You'
-                : replyuser;
-            document.querySelector(
-                '.replyCard .replymessage-block .flex-grow-1 .conversation-name'
-            ).innerText = msgOwnerName;
-        });
-    });
-
-    //Copy Message
-    newChatList.querySelectorAll('.copy-message').forEach(function (subitem) {
-        subitem.addEventListener('click', function () {
-            newChatList.childNodes[1].children[1].firstElementChild.firstElementChild.getAttribute(
-                'id'
-            );
-            isText =
-                newChatList.childNodes[1].children[1].firstElementChild
-                    .firstElementChild.innerText;
-            navigator.clipboard.writeText(isText);
-        });
-    });
-};
 
 //Search Message
 function searchMessages() {

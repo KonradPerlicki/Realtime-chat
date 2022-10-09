@@ -144,61 +144,10 @@
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                <div class="d-flex align-items-center py-3">
-                                                                    <div class="avatar-xs flex-shrink-0 me-3">
-                                                                        <img src="/assets/images/users/avatar-3.jpg"
-                                                                            alt="" class="img-fluid rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">
-                                                                        <div>
-                                                                            <h5 class="fs-14 mb-1">Esther James</h5>
-                                                                            <p class="fs-13 text-muted mb-0">Frontend
-                                                                                Developer</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="flex-shrink-0 ms-2">
-                                                                        <button type="button"
-                                                                            class="btn btn-sm btn-outline-success"><i
-                                                                                class="ri-user-add-line align-middle"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="d-flex align-items-center py-3">
-                                                                    <div class="avatar-xs flex-shrink-0 me-3">
-                                                                        <img src="/assets/images/users/avatar-4.jpg"
-                                                                            alt="" class="img-fluid rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">
-                                                                        <div>
-                                                                            <h5 class="fs-14 mb-1">Jacqueline Steve</h5>
-                                                                            <p class="fs-13 text-muted mb-0">UI/UX
-                                                                                Designer
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="flex-shrink-0 ms-2">
-                                                                        <button type="button"
-                                                                            class="btn btn-sm btn-outline-success"><i
-                                                                                class="ri-user-add-line align-middle"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="d-flex align-items-center py-3">
-                                                                    <div class="avatar-xs flex-shrink-0 me-3">
-                                                                        <img src="/assets/images/users/avatar-5.jpg"
-                                                                            alt="" class="img-fluid rounded-circle" />
-                                                                    </div>
-                                                                    <div class="flex-grow-1">
-                                                                        <div>
-                                                                            <h5 class="fs-14 mb-1">George Whalen</h5>
-                                                                            <p class="fs-13 text-muted mb-0">Backend
-                                                                                Developer</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="flex-shrink-0 ms-2">
-                                                                        <button type="button"
-                                                                            class="btn btn-sm btn-outline-success"><i
-                                                                                class="ri-user-add-line align-middle"></i></button>
-                                                                    </div>
-                                                                </div>
+                                                                <% suggestions.forEach(suggestion=> { %>
+                                                                    <%- include('component/suggestion.ejs',
+                                                                        {suggestion}) %>
+                                                                        <% }); %>
                                                             </div>
                                                         </div><!-- end card body -->
                                                     </div>

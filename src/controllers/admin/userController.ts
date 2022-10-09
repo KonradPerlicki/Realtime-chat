@@ -75,10 +75,11 @@ export default class UserController
             const user = await this.service.getUserById(id, {}, true);
             const authenticatedUser = req.user as UserInterface;
             const owner = authenticatedUser._id === user?._id.toString();
-
+            const suggestions = await this.service.getSuggestionsFor(id);
             return res.render(`${this.viewPath}/userProfile`, {
                 searchedUser: user,
                 owner: owner,
+                suggestions,
             });
         } catch (error: any) {
             //without error so we display 404 page for wrong url
