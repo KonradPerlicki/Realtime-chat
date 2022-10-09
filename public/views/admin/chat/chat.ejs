@@ -267,7 +267,7 @@
                     });
             }, 200);
         }
-        const socket = io('http://localhost:3000', { autoConnect: false });
+        const socket = io({ autoConnect: false });
         socket.auth = { userId: '<%= user._id %>' };
         socket.connect();
 
