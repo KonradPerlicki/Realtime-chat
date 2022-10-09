@@ -16,6 +16,7 @@ import http from 'http';
 import flashData from './middleware/flashData';
 import dotenv from 'dotenv';
 dotenv.config();
+import MongoStore from 'connect-mongo';
 
 export default class App {
     public app: Express;
@@ -65,8 +66,13 @@ export default class App {
 
         this.app.use(morgan('dev'));
         this.app.use(express.json());
+
         this.app.use(
             session({
+                store: MongoStore.create({
+                    mongoUrl: process.env.dbUri,
+                    collectionName: 'ts-chat-application',
+                }),
                 secret: <string>process.env.session_secret,
                 resave: true,
                 saveUninitialized: true,
