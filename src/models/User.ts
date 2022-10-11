@@ -46,7 +46,7 @@ const UserSchema = new Schema(
         },
         backgroundPhoto: {
             type: String,
-            default: '/assets/images/profile-bg.jpg',
+            default: '/assets/images/users/bg.jpg',
             set: (filename: string) => {
                 if (
                     !filename.includes('http') &&
