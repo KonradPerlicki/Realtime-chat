@@ -1,5 +1,11 @@
 # Express.js & TypeScript Chat application
 
+## Live demo
+Link: https://ts-chat-application.herokuapp.com/admin/login  
+Demo account: 
+- login: `test`
+- password: `Testtest12`
+
 <div align="center">
 <h1>Tech Stack</h1>
 
@@ -12,11 +18,11 @@
 <a href="https://www.npmjs.com/" title="NPM"><img src="https://github.com/get-icon/geticon/raw/master/icons/npm.svg" alt="NPM" width="40px" height="40px"></a>
 </div>
 
-# Pre-requisites
+## Pre-requisites
 - Installed [Node.js](https://nodejs.org/en/) version 16.8.0 LTS
 - MongoDB 
 
-# Getting started
+## Getting started
 - Clone the repository
 ```
 git clone https://github.com/KonradPerlicki/Typescript-Project.git
