@@ -36,7 +36,6 @@ npm install
 ```
 cp .\.env.example .env
 ```
-- In .env file 'dbUri' connection string is required to start up the application
 - Build and run the project
 ```
 npm start
