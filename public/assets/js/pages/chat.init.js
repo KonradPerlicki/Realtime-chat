@@ -123,11 +123,6 @@ socket.on('receive-message', (data) => {
         scrollToBottom(currentChatId);
     }
 });
-// popup image
-var lightbox = GLightbox({
-    selector: '.popup-img',
-    title: false,
-});
 
 //User current Id
 var currentChatId = 'users-chat';
