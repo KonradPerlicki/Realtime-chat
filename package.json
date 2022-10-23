@@ -1,7 +1,7 @@
 {
   "name": "project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Real-time chat application",
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node ./dist/app.js",
@@ -9,7 +9,7 @@
     "dev": "tsc-watch --onSuccess \"node ./dist/app.js\"",
     "postinstall": "npm run build"
   },
-  "author": "",
+  "author": "Konrad Perlicki",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
