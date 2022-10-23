@@ -67,6 +67,7 @@ The folder structure of this app is explained below:
 | **src/models**           | Models define schemas that will be used in storing and retrieving data from Application database  |
 | **src/exceptions**      | Custom exceptions |
 | **src/services**    | Services include all the business logic from controllers |
+| **var/logs**    | Includes all logs from application |
 | **src/app.ts**         | Entry point to express app                                                               |
 | package.json             | Contains npm dependencies as well as [build scripts]   
 | tsconfig.json            | Config settings for compiling source code only written in TypeScript    
