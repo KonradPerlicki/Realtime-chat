@@ -45,6 +45,7 @@ npm start
 The main purpose of this repository is to show my skills in writing express.js applications based on TypeScript in object oriented way. Generally, It is my first project in NodeJS.  
 I created chat application with real-time delivering/sending messages to users. Authentication relies on the [Json Web Token](https://jwt.io/)
 and includes features such as: 
+- access and refresh token for more security
 - forgot password feature (uses nodemailer - requires setting `mail_*` values in .env)
 - reset password (uses nodemailer)
 - login with google OAuth2.0 (requires `google_client_id` and `google_client_secret` in .env to your application)  
